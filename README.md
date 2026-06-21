@@ -147,45 +147,17 @@ Wizualizacje zostały przygotowane zgodnie z UML 2.5 przy użyciu notacji PlantU
 
 | Warstwa | Technologia |
 |---|---|
-| Język | Java 21 / Kotlin |
-| Framework aplikacyjny | Spring Boot 3.x |
-| Persystencja | Spring Data JPA + PostgreSQL |
-| Komunikacja asynchroniczna | Apache Kafka (Domain Events) |
-| API REST | Spring MVC + OpenAPI 3.0 (Published Language) |
+| Język | Java 17 |
+| Persystencja |  PostgreSQL |
+| Komunikacja asynchroniczna | Rabbit MQ (Domain Events) |
 | Testy | JUnit 5, ArchUnit (testy architektury), Testcontainers |
-| Build | Gradle / Maven |
-
----
-
-## Uruchomienie lokalne
-
-```bash
-# Klonowanie repozytorium
-git clone https://github.com/<org>/libraflow.git
-cd libraflow
-
-# Uruchomienie zależności infrastrukturalnych (baza, broker)
-docker compose up -d
-
-# Budowanie projektu
-./gradlew build
-
-# Uruchomienie aplikacji
-./gradlew bootRun
-```
-
-API dostępne pod: `http://localhost:8080`  
-Dokumentacja OpenAPI: `http://localhost:8080/swagger-ui.html`
+| Build | Maven |
 
 ---
 
 ## Testy architektury
 
 Projekt zawiera testy `ArchUnit` weryfikujące czystość architektury:
-
-```bash
-./gradlew test --tests "*.ArchitectureTest"
-```
 
 Sprawdzane zasady:
 - Warstwa `domain` nie ma zależności do `application` ani `infrastructure`.
