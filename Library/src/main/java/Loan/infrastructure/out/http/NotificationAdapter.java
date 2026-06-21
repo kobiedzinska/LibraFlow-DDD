@@ -1,4 +1,4 @@
-package Loan.infrastructure.out;
+package Loan.infrastructure.out.http;
 
 import Loan.application.port.out.*;
 

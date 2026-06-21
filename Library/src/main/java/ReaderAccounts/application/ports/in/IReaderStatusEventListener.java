@@ -1,5 +1,10 @@
 package ReaderAccounts.application.ports.in;
 
+import Loan.application.domain.model.CopyBorrowed;
+import Loan.application.domain.model.CopyReturned;
+import Payments.application.domain.model.PaymentCompleted;
+import Payments.application.domain.model.PaymentOverdue;
+
 public interface IReaderStatusEventListener {
 
 	/**

@@ -1,4 +1,4 @@
-package Loan.infrastructure.out;
+package Loan.infrastructure.out.persistence;
 
 import Loan.application.port.out.*;
 import Loan.application.domain.model.*;

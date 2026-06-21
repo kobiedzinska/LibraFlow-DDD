@@ -9,4 +9,14 @@ public class DomainEventPublisherAdapter implements IDomainEventPublisher {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public void subscribe() {
+
+	}
+
+	@Override
+	public void reset() {
+
+	}
+
 }

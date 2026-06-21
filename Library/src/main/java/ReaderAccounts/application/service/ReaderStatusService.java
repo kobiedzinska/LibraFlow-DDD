@@ -1,5 +1,9 @@
 package ReaderAccounts.application.service;
 
+import Loan.application.domain.model.CopyBorrowed;
+import Loan.application.domain.model.CopyReturned;
+import Payments.application.domain.model.PaymentCompleted;
+import Payments.application.domain.model.PaymentOverdue;
 import ReaderAccounts.application.ports.in.*;
 import ReaderAccounts.application.ports.out.*;
 

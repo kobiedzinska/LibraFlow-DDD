@@ -18,7 +18,7 @@ public class NotificationRepository implements INotificationRepository {
 	 * @param nId
 	 */
 	public Notification find(int nId) {
-
+		return null;
 	}
 
 }

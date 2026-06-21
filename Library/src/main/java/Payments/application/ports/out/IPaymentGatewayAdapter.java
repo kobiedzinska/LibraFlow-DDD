@@ -9,7 +9,7 @@ public interface IPaymentGatewayAdapter {
 	 * @param paymentId
 	 * @param amount
 	 */
-	boolean processExternalPayment(int paymentId, decimal amount);
+	boolean processExternalPayment(int paymentId, double amount);
 
 	/**
 	 * 

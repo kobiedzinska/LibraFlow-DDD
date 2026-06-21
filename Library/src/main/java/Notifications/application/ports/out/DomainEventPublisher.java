@@ -1,5 +1,7 @@
 package Notifications.application.ports.out;
 
+import Notifications.application.domain.model.DomainEvent;
+
 public interface DomainEventPublisher {
 
 	/**
