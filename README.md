@@ -43,7 +43,7 @@ System oparty jest na czterech filarach architektonicznych:
 ### Lending Context (Core)
 Centrum systemu. Odpowiada za pełny cykl życia wypożyczenia.
 
-Kluczowe pojęcia: `Reader`, `BookCopy`, `Loan`, `Fine`, `Blockade`
+Kluczowe pojęcia: `Reader`, `BookCopy`, `src.main.java.Loan`, `Fine`, `Blockade`
 
 ### Catalog Context (Supporting)
 Źródło prawdy o zasobach bibliotecznych.
