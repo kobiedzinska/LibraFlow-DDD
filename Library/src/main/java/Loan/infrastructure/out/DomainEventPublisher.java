@@ -1,7 +1,6 @@
 package Loan.infrastructure.out;
 
 import Loan.application.port.out.*;
-import Notifications.application.domain.model.DomainEvent;
 
 public class DomainEventPublisher implements IDomainEventPublisher {
 

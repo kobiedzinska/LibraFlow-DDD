@@ -8,6 +8,6 @@ public interface IReaderRepository {
 	 * 
 	 * @param readerId
 	 */
-	ReaderSnapshot getReaderSnapshot(int readerId);
+	ReaderSnapshot getReaderSnapshot(Integer readerId);
 
 }

@@ -8,6 +8,6 @@ public interface ICopyStatusAdapter {
 	 * 
 	 * @param copyId
 	 */
-	CopyAvailability getCopyStatus(int copyId);
+	CopyAvailability getCopyStatus(Integer copyId);
 
 }

@@ -18,7 +18,7 @@ public class LoanRepository implements ILoanRepository {
 	 * 
 	 * @param loanId
 	 */
-	public Loan findLoan(int loanId) {
+	public Loan findLoan(Integer loanId) {
 		// TODO - implement LoanRepository.findLoan
 		throw new UnsupportedOperationException();
 	}

@@ -5,14 +5,14 @@ public interface IManageLoanUseCase {
 	/**
 	 * 
 	 * @param copyId
-	 * @param clientId
+	 * @param readerId
 	 */
-	void loanCopy(Integer copyId, Integer clientId);
+	void loanCopy(Integer copyId, Integer readerId);
 
 	/**
 	 * 
 	 * @param loanId
 	 */
-	void returnCopy(Integer loanId);
+	void returnLoan(Integer loanId);
 
 }

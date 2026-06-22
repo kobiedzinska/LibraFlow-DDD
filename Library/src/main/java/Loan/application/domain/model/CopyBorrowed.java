@@ -1,3 +1,4 @@
+/*
 package Loan.application.domain.model;
 
 import java.time.LocalDateTime;
@@ -36,4 +37,4 @@ public class CopyBorrowed {
 	public void setOccuredOn(LocalDateTime occuredOn) {
 		this.occuredOn = occuredOn;
 	}
-}
+}*/
