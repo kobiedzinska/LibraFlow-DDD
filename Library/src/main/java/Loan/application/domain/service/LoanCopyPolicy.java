@@ -6,12 +6,21 @@ public class LoanCopyPolicy {
 
 	/**
 	 * 
-	 * @param r
+	 * @param reader
 	 * @param availability
 	 */
-	public void canBorrow(ReaderSnapshot r, CopyAvailability availability) {
-		// TODO - implement LoanCopyPolicy.canBorrow
-		throw new UnsupportedOperationException();
+	public void canBorrow(ReaderSnapshot reader, CopyAvailability availability) {
+		if (reader.getBlocked()) {
+			throw new IllegalStateException("Reader is blocked");
+		}
+
+		if (reader.getActiveLoansCount() >= 5) {
+			throw new IllegalStateException("Loan limit exceeded");
+		}
+
+		if (availability != CopyAvailability.AVAILABLE) {
+			throw new IllegalStateException("Copy not available");
+		}
 	}
 
 }

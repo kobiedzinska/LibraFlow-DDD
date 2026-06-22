@@ -14,8 +14,7 @@ public class ManageCatalogService implements ICatalogManagementUseCase {
 	 * @param c
 	 */
 	public void addCopy(Copy c) {
-		// TODO - implement ManageCatalogService.addCopy
-		throw new UnsupportedOperationException();
+		copyRepository.saveCopy(c);
 	}
 
 	/**
@@ -23,8 +22,7 @@ public class ManageCatalogService implements ICatalogManagementUseCase {
 	 * @param b
 	 */
 	public void addBook(Book b) {
-		// TODO - implement ManageCatalogService.addBook
-		throw new UnsupportedOperationException();
+		bookRepository.saveBook(b);
 	}
 
 }

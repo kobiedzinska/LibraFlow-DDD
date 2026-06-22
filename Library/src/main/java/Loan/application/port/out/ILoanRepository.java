@@ -13,6 +13,6 @@ public interface ILoanRepository {
 	 * 
 	 * @param loanId
 	 */
-	Loan findLoan(int loanId);
+	Loan findLoan(Integer loanId);
 
 }

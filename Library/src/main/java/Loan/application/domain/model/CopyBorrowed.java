@@ -13,4 +13,27 @@ public class CopyBorrowed {
 		throw new UnsupportedOperationException();
 	}
 
+	public int getCopyId() {
+		return copyId;
+	}
+
+	public void setCopyId(int copyId) {
+		this.copyId = copyId;
+	}
+
+	public int getReaderId() {
+		return readerId;
+	}
+
+	public void setReaderId(int readerId) {
+		this.readerId = readerId;
+	}
+
+	public LocalDateTime getOccuredOn() {
+		return occuredOn;
+	}
+
+	public void setOccuredOn(LocalDateTime occuredOn) {
+		this.occuredOn = occuredOn;
+	}
 }

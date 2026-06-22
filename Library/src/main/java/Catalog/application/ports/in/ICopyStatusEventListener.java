@@ -1,27 +1,24 @@
 package Catalog.application.ports.in;
 
-import Loan.application.domain.model.CopyBorrowed;
-import Loan.application.domain.model.CopyOverdue;
-import Loan.application.domain.model.CopyReturned;
 
 public interface ICopyStatusEventListener {
 
 	/**
 	 * 
-	 * @param event
+	 * @param copyId
 	 */
-	void handleCopyBorrowed(CopyBorrowed event);
+	void handleCopyBorrowed(Integer copyId);
 
 	/**
 	 * 
-	 * @param event
+	 * @param copyId
 	 */
-	void handleCopyReturned(CopyReturned event);
+	void handleCopyReturned(Integer copyId);
 
 	/**
 	 * 
-	 * @param event
+	 * @param copyId
 	 */
-	void handleCopyOverdue(CopyOverdue event);
+	void handleCopyOverdue(Integer copyId);
 
 }

@@ -1,10 +1,11 @@
 package Loan.infrastructure.out;
 
 import Loan.application.port.out.*;
+import Notifications.application.domain.model.DomainEvent;
 
 public class DomainEventPublisher implements IDomainEventPublisher {
 
-	public void publish() {
+	public void publish(Object event) {
 		// TODO - implement DomainEventPublisher.publish
 		throw new UnsupportedOperationException();
 	}

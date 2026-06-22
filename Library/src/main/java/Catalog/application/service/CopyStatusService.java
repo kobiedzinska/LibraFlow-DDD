@@ -1,5 +1,6 @@
 package Catalog.application.service;
 
+import Catalog.application.domain.model.Copy;
 import Catalog.application.ports.in.*;
 import Catalog.application.ports.out.*;
 import Loan.application.domain.model.CopyBorrowed;
@@ -13,29 +14,56 @@ public class CopyStatusService implements ICopyStatusEventListener {
 
 	/**
 	 * 
-	 * @param event
+	 * @param copyId
 	 */
-	public void handleCopyBorrowed(CopyBorrowed event) {
-		// TODO - implement CopyStatusService.handleCopyBorrowed
-		throw new UnsupportedOperationException();
+	public void handleCopyBorrowed(Integer copyId) {
+		Copy copy = copyRepository.findCopy(copyId);
+
+		if (copy == null) {
+			throw new IllegalArgumentException(
+					"Copy not found: " + copyId);
+		}
+
+		copy.markBorrowed();
+
+		copyRepository.saveCopy(copy);
 	}
 
 	/**
 	 * 
-	 * @param event
+	 * @param copyId
 	 */
-	public void handleCopyReturned(CopyReturned event) {
-		// TODO - implement CopyStatusService.handleCopyReturned
-		throw new UnsupportedOperationException();
+	public void handleCopyReturned(Integer copyId) {
+
+		Copy copy = copyRepository.findCopy(copyId);
+
+		if (copy == null) {
+			throw new IllegalArgumentException(
+					"Copy not found: " + copyId);
+		}
+
+		copy.markAvailable();
+
+		copyRepository.saveCopy(copy);
 	}
 
 	/**
 	 * 
-	 * @param event
+	 * @param copyId
 	 */
-	public void handleCopyOverdue(CopyOverdue event) {
-		// TODO - implement CopyStatusService.handleCopyOverdue
-		throw new UnsupportedOperationException();
+	@Override
+	public void handleCopyOverdue(Integer copyId) {
+
+		Copy copy = copyRepository.findCopy(copyId);
+
+		if (copy == null) {
+			throw new IllegalArgumentException(
+					"Copy not found: " + copyId);
+		}
+
+		copy.markOverdue();
+
+		copyRepository.saveCopy(copy);
 	}
 
 }

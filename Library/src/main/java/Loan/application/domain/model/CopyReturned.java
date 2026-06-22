@@ -12,4 +12,19 @@ public class CopyReturned {
 		throw new UnsupportedOperationException();
 	}
 
+	public int getCopyId() {
+		return copyId;
+	}
+
+	public void setCopyId(int copyId) {
+		this.copyId = copyId;
+	}
+
+	public LocalDateTime getOccuredOn() {
+		return occuredOn;
+	}
+
+	public void setOccuredOn(LocalDateTime occuredOn) {
+		this.occuredOn = occuredOn;
+	}
 }

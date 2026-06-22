@@ -4,6 +4,6 @@ import Catalog.application.ports.in.*;
 
 public class CatalogController {
 
-	private ICatalogManagementUseCase catalogService;
+	public ICatalogManagementUseCase catalogService;
 
 }
