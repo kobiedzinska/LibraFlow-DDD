@@ -1,10 +1,10 @@
-package Payments.application.ports.out;
+package Payments.application.ports.out.persistence;
 
 import Payments.application.domain.model.*;
 
 public interface IPaymentRepository {
 
-	void savePayment();
+	void savePayment(Payment p);
 
 	/**
 	 * 

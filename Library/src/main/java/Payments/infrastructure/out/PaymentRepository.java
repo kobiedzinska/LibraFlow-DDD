@@ -1,13 +1,13 @@
 package Payments.infrastructure.out;
 
-import Payments.application.ports.out.*;
 import Payments.application.domain.model.*;
+import Payments.application.ports.out.persistence.IPaymentRepository;
 
 public class PaymentRepository implements IPaymentRepository {
 
-	public void savePayment() {
-		// TODO - implement PaymentRepository.savePayment
-		throw new UnsupportedOperationException();
+	@Override
+	public void savePayment(Payment p) {
+
 	}
 
 	/**

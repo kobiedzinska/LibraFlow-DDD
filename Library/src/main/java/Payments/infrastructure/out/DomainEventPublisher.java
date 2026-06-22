@@ -1,6 +1,6 @@
 package Payments.infrastructure.out;
 
-import Payments.application.ports.out.*;
+import Payments.application.ports.out.http.IDomainEventPublisher;
 
 public class DomainEventPublisher implements IDomainEventPublisher {
 

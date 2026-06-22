@@ -6,6 +6,7 @@ public class Payment {
 
 	private int paymentId;
 	private int readerId;
+	private int loanId;
 	private double amount;
 	private LocalDateTime dueDate;
 	private PaymentStatus paymentStatus;
@@ -14,19 +15,22 @@ public class Payment {
 	 * 
 	 * @param readerId
 	 */
-	public Payment(int readerId) {
-		// TODO - implement Payment.Payment
-		throw new UnsupportedOperationException();
+
+	public Payment(int readerId, int loanId, double fine) {
+		this.readerId = readerId;
+		this.amount = fine;
+		this.loanId = loanId;
+		this.paymentStatus = PaymentStatus.PENDING;
+		paymentId = -1;
 	}
 
 	public void complete() {
-		// TODO - implement Payment.complete
-		throw new UnsupportedOperationException();
+		this.paymentStatus = PaymentStatus.PAID;
+
 	}
 
 	public void markedOverdue() {
-		// TODO - implement Payment.markedOverdue
-		throw new UnsupportedOperationException();
+		this.paymentStatus = PaymentStatus.OVERDUE;
 	}
 
 }
