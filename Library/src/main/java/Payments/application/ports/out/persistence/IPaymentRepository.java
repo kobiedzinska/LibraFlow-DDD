@@ -8,9 +8,8 @@ public interface IPaymentRepository {
 
 	/**
 	 * 
-	 * @param readerId
-	 * @param loanId
+	 * @param paymentId
 	 */
-	Payment findPayment(int readerId, int loanId);
+	Payment findPayment(int paymentId);
 
 }
