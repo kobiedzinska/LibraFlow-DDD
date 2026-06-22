@@ -9,7 +9,7 @@ public class CopyStatusAdapter implements ICopyStatusAdapter {
 	 * 
 	 * @param copyId
 	 */
-	public CopyAvailability getCopyStatus(int copyId) {
+	public CopyAvailability getCopyStatus(Integer copyId) {
 		// TODO - implement CopyStatusAdapter.getCopyStatus
 		throw new UnsupportedOperationException();
 	}

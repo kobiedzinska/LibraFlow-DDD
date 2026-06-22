@@ -9,7 +9,7 @@ public class ReaderRepository implements IReaderRepository {
 	 * 
 	 * @param readerId
 	 */
-	public ReaderSnapshot getReaderSnapshot(int readerId) {
+	public ReaderSnapshot getReaderSnapshot(Integer readerId) {
 		// TODO - implement ReaderRepository.getReaderSnapshot
 		throw new UnsupportedOperationException();
 	}

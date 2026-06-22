@@ -1,5 +1,6 @@
 package Loan.application.service;
 
+import Loan.application.domain.events.CopyBorrowedEvent;
 import Loan.application.domain.events.CopyReturnedEvent;
 import Loan.application.domain.model.CopyAvailability;
 import Loan.application.domain.model.LoanStatus;
@@ -22,12 +23,12 @@ public class LoanService implements IManageLoanUseCase {
 	/**
 	 * 
 	 * @param copyId
-	 * @param clientId
+	 * @param readerId
 	 */
-	public void loanCopy(Integer copyId, Integer clientId) {
+	public void loanCopy(Integer copyId, Integer readerId) {
 
 		ReaderSnapshot reader =
-				readerRepository.getReaderSnapshot(clientId);
+				readerRepository.getReaderSnapshot(readerId);
 
 		CopyAvailability availability =
 				copyStatusAdapter.getCopyStatus(copyId);
@@ -36,7 +37,7 @@ public class LoanService implements IManageLoanUseCase {
 
 		Loan loan = new Loan(
 				null,
-				clientId,
+				readerId,
 				copyId,
 				LocalDateTime.now().plusDays(30),
 				LocalDateTime.now(),
@@ -47,11 +48,11 @@ public class LoanService implements IManageLoanUseCase {
 		loanRepository.saveLoan(loan);
 
 		eventPublisher.publish(
-				loan.borrowEvent()
+				new CopyBorrowedEvent(copyId, readerId, LocalDateTime.now())
 		);
 	}
 
-	/*	public void loanCopy(int loanId, int clientId) {
+	/*	public void loanCopy(int loanId, int readerId) {
 		ReaderSnapshot reader =
 				readerRepository.getReaderSnapshot(readerId);
 
@@ -74,7 +75,7 @@ public class LoanService implements IManageLoanUseCase {
 	 * 
 	 * @param loanId
 	 */
-	public void returnCopy(Integer loanId) {
+	public void returnLoan(Integer loanId) {
 		Loan loan = loanRepository.findLoan(loanId);
 
 		loan.returnCopy();
@@ -83,7 +84,7 @@ public class LoanService implements IManageLoanUseCase {
 
 		eventPublisher.publish(
 				new CopyReturnedEvent(
-						loanId,
+						loan.getCopyId(),
 						LocalDateTime.now()
 				)
 		);

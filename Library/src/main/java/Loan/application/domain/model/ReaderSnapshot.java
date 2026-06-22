@@ -2,11 +2,11 @@ package Loan.application.domain.model;
 
 public class ReaderSnapshot {
 
-	private int readerId;
+	private Integer readerId;
 	private Boolean isBlocked;
 	private int activeLoansCount;
 
-	public int getReaderId() {
+	public Integer getReaderId() {
 		return readerId;
 	}
 
