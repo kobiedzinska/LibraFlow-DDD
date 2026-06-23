@@ -54,7 +54,6 @@ public class Loan {
 
 package Loan.application.domain.model;
 
-import Loan.application.domain.events.CopyBorrowedEvent;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -85,23 +84,9 @@ public class Loan {
 		this.returnedAt = returnedAt;
 	}
 
-	public static Loan create(Integer loanId, Integer readerId, Integer copyId) {
 
-		LocalDateTime now = LocalDateTime.now();
-
-		return new Loan(
-				loanId,
-				readerId,
-				copyId,
-				now.plusDays(30),
-				now,
-				LoanStatus.BORROWED,
-				null
-		);
-	}
-
-	public CopyBorrowedEvent borrowEvent() {
-		return new CopyBorrowedEvent(copyId, readerId, LocalDateTime.now());
+	public CopyBorrowed borrowEvent() {
+		return new CopyBorrowed(copyId, readerId, LocalDateTime.now());
 	}
 
 	public void returnCopy() {

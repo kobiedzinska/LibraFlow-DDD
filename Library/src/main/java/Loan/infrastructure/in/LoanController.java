@@ -4,6 +4,6 @@ import Loan.application.port.in.*;
 
 public class LoanController {
 
-	public IManageLoanUseCase loanService;
+	public ILoanManageLoanUseCase loanService;
 
 }

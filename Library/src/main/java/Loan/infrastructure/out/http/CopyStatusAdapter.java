@@ -10,8 +10,8 @@ public class CopyStatusAdapter implements ICopyStatusAdapter {
 	 * @param copyId
 	 */
 	public CopyAvailability getCopyStatus(Integer copyId) {
-		// TODO - implement CopyStatusAdapter.getCopyStatus
-		throw new UnsupportedOperationException();
+		//db to connect TODO
+		return null;
 	}
 
 }
