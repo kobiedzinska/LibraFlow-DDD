@@ -1,6 +1,6 @@
 package Loan.application.port.in;
 
-public interface IManageLoanUseCase {
+public interface ILoanManageLoanUseCase {
 
 	/**
 	 * 
