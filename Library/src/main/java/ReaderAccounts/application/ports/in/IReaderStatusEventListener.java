@@ -13,17 +13,6 @@ public interface IReaderStatusEventListener {
 	 */
 	void handlePaymentOverdue(PaymentOverdue event);
 
-	/**
-	 * 
-	 * @param event
-	 */
-	void handleCopyBorrowed(CopyBorrowed event);
-
-	/**
-	 * 
-	 * @param event
-	 */
-	void handleCopyReturned(CopyReturned event);
 
 	/**
 	 * 
