@@ -1,12 +1,16 @@
 package src.main.java;
 
+import ReaderAccounts.application.ports.out.http.ICatalogEventPublisher;
+import ReaderAccounts.application.ports.out.http.ILoanPort;
+import ReaderAccounts.application.ports.out.http.IPaymentsPort;
+import ReaderAccounts.application.ports.out.persistence.IReaderRepository;
 import ReaderAccounts.application.service.ManageAccountsService;
 import ReaderAccounts.infrastructure.in.ManageAccountsControler;
-import ReaderAccounts.application.ports.out.*;
 import ReaderAccounts.application.domain.service.*;
-import ReaderAccounts.infrastructure.out.CatalogEventPublisher;
-import ReaderAccounts.infrastructure.out.LoanPort;
-import ReaderAccounts.infrastructure.out.PaymentsPort;
+import ReaderAccounts.infrastructure.out.http.CatalogEventPublisher;
+import ReaderAccounts.infrastructure.out.http.LoanPort;
+import ReaderAccounts.infrastructure.out.http.PaymentsPort;
+import ReaderAccounts.infrastructure.out.persistence.ReaderRepository;
 
 
 public class Main {

@@ -1,6 +1,6 @@
-package ReaderAccounts.infrastructure.out;
+package ReaderAccounts.infrastructure.out.http;
 
-import ReaderAccounts.application.ports.out.*;
+import ReaderAccounts.application.ports.out.http.ILoanPort;
 
 public class LoanPort implements ILoanPort {
 

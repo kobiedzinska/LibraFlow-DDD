@@ -1,4 +1,4 @@
-package ReaderAccounts.application.ports.out;
+package ReaderAccounts.application.ports.out.http;
 
 public interface IPaymentsPort {
 

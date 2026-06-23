@@ -1,4 +1,4 @@
-package ReaderAccounts.application.ports.out;
+package ReaderAccounts.application.ports.out.persistence;
 
 import ReaderAccounts.application.domain.model.*;
 

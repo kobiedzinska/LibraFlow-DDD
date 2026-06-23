@@ -4,8 +4,11 @@ import ReaderAccounts.application.domain.model.AccountCreated;
 import ReaderAccounts.application.domain.model.AccountDeleted;
 import ReaderAccounts.application.domain.model.Reader;
 import ReaderAccounts.application.ports.in.*;
-import ReaderAccounts.application.ports.out.*;
 import ReaderAccounts.application.domain.service.*;
+import ReaderAccounts.application.ports.out.http.ICatalogEventPublisher;
+import ReaderAccounts.application.ports.out.http.ILoanPort;
+import ReaderAccounts.application.ports.out.http.IPaymentsPort;
+import ReaderAccounts.application.ports.out.persistence.IReaderRepository;
 
 import java.time.LocalDateTime;
 

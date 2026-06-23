@@ -1,7 +1,8 @@
-package ReaderAccounts.application.domain.service;
+package ReaderAccounts.infrastructure.out.persistence;
 
-import ReaderAccounts.application.ports.out.*;
+import ReaderAccounts.application.domain.service.ReaderFileMapper;
 import ReaderAccounts.application.domain.model.*;
+import ReaderAccounts.application.ports.out.persistence.IReaderRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;

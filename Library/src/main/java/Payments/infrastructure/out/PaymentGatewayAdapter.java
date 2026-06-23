@@ -11,8 +11,7 @@ public class PaymentGatewayAdapter implements IPaymentGatewayAdapter {
 	 * @param amount
 	 */
 	public boolean processExternalPayment(int paymentId, double amount) {
-		// TODO - implement PaymentGatewayAdapter.processExternalPayment
-		throw new UnsupportedOperationException();
+		return true;
 	}
 
 	/**
@@ -20,8 +19,7 @@ public class PaymentGatewayAdapter implements IPaymentGatewayAdapter {
 	 * @param paymentId
 	 */
 	public PaymentStatus verifyPayment(int paymentId) {
-		// TODO - implement PaymentGatewayAdapter.verifyPayment
-		throw new UnsupportedOperationException();
+		return PaymentStatus.PAID;
 	}
 
 }
