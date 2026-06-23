@@ -13,7 +13,7 @@ import static ReaderAccounts.application.domain.service.ReaderFileMapper.generat
 import static ReaderAccounts.application.domain.service.ReaderFileMapper.mapToLine;
 
 public class ReaderRepository implements IUserRepository {
-	private static final Path FILE_PATH = Path.of("accounts.txt");
+	private static final Path FILE_PATH = Path.of("Database/accounts.txt");
 
 	/**
 	 *
