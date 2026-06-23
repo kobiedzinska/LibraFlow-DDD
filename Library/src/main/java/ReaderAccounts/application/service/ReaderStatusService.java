@@ -13,21 +13,14 @@ public class ReaderStatusService implements IReaderStatusEventListener {
 	ILoanPort copyPort;
 	IPaymentsPort paymentsPort;
 
-	/**
-	 * 
-	 * @param event
-	 */
-	public void handlePaymentOverdue(PaymentOverdue event) {
+
+	public void handlePaymentOverdue(int clientId) {
 		// TODO - implement ReaderStatusService.handlePaymentOverdue
 		throw new UnsupportedOperationException();
 	}
 
 
-	/**
-	 * 
-	 * @param event
-	 */
-	public void handlePaymentCompleted(PaymentCompleted event) {
+	public void handlePaymentCompleted(int clientId) {
 		// TODO - implement ReaderStatusService.handlePaymentCompleted
 		throw new UnsupportedOperationException();
 	}
