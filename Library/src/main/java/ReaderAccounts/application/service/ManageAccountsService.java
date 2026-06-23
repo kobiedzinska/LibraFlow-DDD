@@ -1,6 +1,5 @@
 package ReaderAccounts.application.service;
 
-import Loan.application.port.out.ILoanRepository;
 import ReaderAccounts.application.domain.model.AccountCreated;
 import ReaderAccounts.application.domain.model.AccountDeleted;
 import ReaderAccounts.application.domain.model.Reader;
@@ -13,13 +12,13 @@ import java.time.LocalDateTime;
 public class ManageAccountsService implements IManageAccountsUseCase {
 
 	private ICatalogEventPublisher domainEventPublisher;
-	private IUserRepository readerRepository;
+	private IReaderRepository readerRepository;
 	private ILoanPort loanPort;
 	private IPaymentsPort paymentsPort;
 	CreateAccount createAccount;
 	DeleteAccount deleteAccount;
 
-	public ManageAccountsService(ICatalogEventPublisher domainEventPublisher, CreateAccount createAccount, DeleteAccount deleteAccount, IUserRepository readerRepository, ILoanPort loanPort, IPaymentsPort paymentsPort) {
+	public ManageAccountsService(ICatalogEventPublisher domainEventPublisher, CreateAccount createAccount, DeleteAccount deleteAccount, IReaderRepository readerRepository, ILoanPort loanPort, IPaymentsPort paymentsPort) {
 		this.domainEventPublisher = domainEventPublisher;
 		this.createAccount = createAccount;
 		this.deleteAccount = deleteAccount;

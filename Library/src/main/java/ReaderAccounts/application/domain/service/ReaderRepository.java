@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static ReaderAccounts.application.domain.service.ReaderFileMapper.generateNextId;
 import static ReaderAccounts.application.domain.service.ReaderFileMapper.mapToLine;
 
-public class ReaderRepository implements IUserRepository {
+public class ReaderRepository implements IReaderRepository {
 	private static final Path FILE_PATH = Path.of("Database/accounts.txt");
 
 	/**

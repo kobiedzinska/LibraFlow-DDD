@@ -2,7 +2,7 @@ package ReaderAccounts.application.ports.out;
 
 import ReaderAccounts.application.domain.model.*;
 
-public interface IUserRepository {
+public interface IReaderRepository {
 
 	/**
 	 * 

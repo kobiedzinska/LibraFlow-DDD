@@ -15,7 +15,7 @@ public class Main {
 
         // Tworzenie instancji zależności
         ICatalogEventPublisher domainEventPublisher = new CatalogEventPublisher();
-        IUserRepository userRepository = new ReaderRepository();
+        IReaderRepository userRepository = new ReaderRepository();
         ILoanPort loanPort = new LoanPort();
         IPaymentsPort paymentsPort = new PaymentsPort();
 
