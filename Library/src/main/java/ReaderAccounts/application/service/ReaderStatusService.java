@@ -10,8 +10,8 @@ import ReaderAccounts.application.ports.out.*;
 public class ReaderStatusService implements IReaderStatusEventListener {
 
 	IUserRepository userRepozytorium;
-	CopyPort copyPort;
-	PaymentsPort paymentsPort;
+	ICopyPort copyPort;
+	IPaymentsPort paymentsPort;
 
 	/**
 	 * 

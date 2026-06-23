@@ -42,7 +42,7 @@ public class Payment {
 		this.loanId = loanId;
 		this.paymentStatus = PaymentStatus.PENDING;
 		paymentId = -1;
-
+		this.paymentEvents = new ArrayList<>();
 
 	}
 

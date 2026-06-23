@@ -2,7 +2,7 @@ package ReaderAccounts.application.domain.model;
 
 import java.time.LocalDateTime;
 
-public class AccountDeleted {
+public class AccountDeleted extends AccountEvent {
 
 	private int userId;
 	private LocalDateTime occuredOn;

@@ -1,11 +1,11 @@
 package ReaderAccounts.application.ports.out;
 
-public interface CopyPort {
+public interface IPaymentsPort {
 
 	/**
 	 * 
 	 * @param readerId
 	 */
-	int checkLoans(int readerId);
+	int checkPayments(int readerId);
 
 }

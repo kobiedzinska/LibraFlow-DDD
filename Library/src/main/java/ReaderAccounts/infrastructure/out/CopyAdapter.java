@@ -2,7 +2,7 @@ package ReaderAccounts.infrastructure.out;
 
 import ReaderAccounts.application.ports.out.*;
 
-public class CopyAdapter implements CopyPort {
+public class CopyAdapter implements ICopyPort {
 
 	/**
 	 * 

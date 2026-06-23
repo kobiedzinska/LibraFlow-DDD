@@ -2,7 +2,7 @@ package ReaderAccounts.application.domain.model;
 
 import java.time.LocalDateTime;
 
-public class AccountCreated {
+public class AccountCreated extends AccountEvent {
 
 	private int userId;
 	private Roles role;
@@ -11,12 +11,11 @@ public class AccountCreated {
 	/**
 	 * 
 	 * @param userId
-	 * @param role
 	 * @param occurredOn
 	 */
-	public AccountCreated(int userId, Roles role, LocalDateTime occurredOn) {
-		// TODO - implement AccountCreated.AccountCreated
-		throw new UnsupportedOperationException();
+	public AccountCreated(int userId, LocalDateTime occurredOn) {
+		this.userId = userId;
+		this.occuredOn = occurredOn;
 	}
 
 }

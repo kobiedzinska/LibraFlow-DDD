@@ -2,7 +2,7 @@ package ReaderAccounts.infrastructure.out;
 
 import ReaderAccounts.application.ports.out.*;
 
-public class PaymentsAdapter implements PaymentsPort {
+public class PaymentsAdapter implements IPaymentsPort {
 
 	/**
 	 * 

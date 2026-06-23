@@ -5,12 +5,10 @@ import ReaderAccounts.application.domain.model.*;
 public class CreateAccount {
 
 	/**
-	 * 
-	 * @param user
+	 *
 	 */
-	public Boolean checkUnique(User user) {
-		// TODO - implement CreateAccount.checkUnique
-		throw new UnsupportedOperationException();
+	public Boolean checkUnique(boolean loginTaken, boolean emailTaken) {
+		return !loginTaken && !emailTaken;
 	}
 
 	/**
@@ -27,8 +25,7 @@ public class CreateAccount {
 	 * @param reader
 	 */
 	public Reader createReader(Reader reader) {
-		// TODO - implement CreateAccount.createReader
-		throw new UnsupportedOperationException();
+		return reader;
 	}
 
 }

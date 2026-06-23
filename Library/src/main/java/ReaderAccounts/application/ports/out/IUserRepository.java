@@ -15,5 +15,7 @@ public interface IUserRepository {
 	 * @param rId
 	 */
 	Reader findUser(int rId);
+	boolean existsByLogin(String login);
+	boolean existsByEmail(String email);
 
 }
