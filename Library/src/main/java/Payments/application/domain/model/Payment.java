@@ -1,8 +1,19 @@
 package Payments.application.domain.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Payment {
+	public List<PaymentEvent> getDomainEvents() {
+		return paymentEvents;
+	}
+
+	public void setPaymentEvents(List<PaymentEvent> domainEvents) {
+		this.paymentEvents = domainEvents;
+	}
+
+	private List<PaymentEvent> paymentEvents = new ArrayList<>();
 
 	public void setReaderId(int readerId) {
 		this.readerId = readerId;
@@ -31,15 +42,22 @@ public class Payment {
 		this.loanId = loanId;
 		this.paymentStatus = PaymentStatus.PENDING;
 		paymentId = -1;
+
+
 	}
 
-	public void complete() {
+	public PaymentCompleted complete() {
 		this.paymentStatus = PaymentStatus.PAID;
-
+		PaymentCompleted event = new PaymentCompleted(paymentId, readerId, LocalDateTime.now());
+		paymentEvents.add(event);
+		return event;
 	}
 
-	public void markedOverdue() {
+	public PaymentOverdue markedOverdue() {
 		this.paymentStatus = PaymentStatus.OVERDUE;
+		PaymentOverdue event = new PaymentOverdue(paymentId, readerId, LocalDateTime.now());
+		paymentEvents.add(event);
+		return event;
 	}
 
 	@Override
@@ -61,8 +79,12 @@ public class Payment {
 	public int getPaymentId() {
 		return paymentId;
 	}
-	public void setPaymentId(int paymentId) {
+	public PaymentPending setPaymentId(int paymentId) {
 		this.paymentId = paymentId;
+		// Po zapisaniu Payment do repoistory, tworzymy wydarzenie
+		PaymentPending event = new PaymentPending(paymentId, readerId, loanId, amount);
+		paymentEvents.add(event);
+		return event;
 	}
 	public double getAmount() {
 		return amount;
@@ -84,6 +106,10 @@ public class Payment {
 	}
 
 	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public void setStatus(PaymentStatus paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
 }

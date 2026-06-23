@@ -2,7 +2,7 @@ package Payments.application.domain.model;
 
 import java.time.LocalDateTime;
 
-public class PaymentOverdue {
+public class PaymentOverdue extends PaymentEvent {
 
 	private int paymentId;
 	private int clientId;
