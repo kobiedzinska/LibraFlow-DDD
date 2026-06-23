@@ -1,7 +1,7 @@
 package Payments.infrastructure.out;
 
-import Payments.application.ports.out.*;
 import Payments.application.domain.model.*;
+import Payments.application.ports.out.http.IPaymentGatewayAdapter;
 
 public class PaymentGatewayAdapter implements IPaymentGatewayAdapter {
 

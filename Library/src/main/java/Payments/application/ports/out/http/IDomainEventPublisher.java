@@ -1,4 +1,4 @@
-package Payments.application.ports.out;
+package Payments.application.ports.out.http;
 
 public interface IDomainEventPublisher {
 

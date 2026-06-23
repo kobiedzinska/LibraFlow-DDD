@@ -1,4 +1,4 @@
-package Payments.application.ports.out;
+package Payments.application.ports.out.http;
 
 import Payments.application.domain.model.*;
 

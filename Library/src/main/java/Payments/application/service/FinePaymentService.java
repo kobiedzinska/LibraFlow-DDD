@@ -1,7 +1,8 @@
 package Payments.application.service;
 
 import Payments.application.ports.in.*;
-import Payments.application.ports.out.*;
+import Payments.application.ports.out.http.IDomainEventPublisher;
+import Payments.application.ports.out.persistence.IPaymentRepository;
 
 public class FinePaymentService implements IPaymentUseCase {
 
