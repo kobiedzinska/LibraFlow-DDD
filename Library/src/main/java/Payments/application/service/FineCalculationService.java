@@ -4,6 +4,7 @@ import Payments.application.domain.model.Payment;
 import Payments.application.ports.in.*;
 import Payments.application.domain.service.*;
 import Payments.application.ports.out.http.IDomainEventPublisher;
+import Payments.application.ports.out.persistence.IPaymentRepository;
 
 
 import java.time.LocalDateTime;
@@ -11,8 +12,13 @@ import java.time.LocalDateTime;
 public class FineCalculationService implements ILoanOverdueEventListener {
 
 	private CalculateFine calculateFine;
+	private IPaymentRepository paymentRepository;
 
 	private IDomainEventPublisher domainEventPublisher;
+	public FineCalculationService(IPaymentRepository paymentRepository, IDomainEventPublisher domainEventPublisher) {
+		this.paymentRepository = paymentRepository;
+		this.domainEventPublisher = domainEventPublisher;
+	}
 
 	/**
 	 * 
@@ -30,8 +36,11 @@ public class FineCalculationService implements ILoanOverdueEventListener {
 		// Tworzymy Payment
 		Payment payment = new Payment(clientId, loanId, fine);
 		// Dodajemy do repistory
+		paymentRepository.savePayment(payment);
 
 
-		throw new UnsupportedOperationException();
+		domainEventPublisher.publish(payment.getDomainEvents().getFirst());
+
+
 	}
 }

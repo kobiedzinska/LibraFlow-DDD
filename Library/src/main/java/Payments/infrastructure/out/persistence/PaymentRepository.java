@@ -29,7 +29,6 @@ public class PaymentRepository implements IPaymentRepository {
 		try (Stream<String> lines = Files.lines(FILE_PATH)) {
 			return lines
 					.filter(line -> line != null && !line.strip().isEmpty())
-					// TUTAJ ZMIANA: Wywołujemy metodę statyczną na klasie przy użyciu ::
 					.map(PaymentFileMapper::mapToPayment)
 					.filter(p -> p != null && p.getPaymentId() == paymentId)
 					.findFirst()
