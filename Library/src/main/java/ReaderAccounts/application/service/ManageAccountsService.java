@@ -1,6 +1,8 @@
 package ReaderAccounts.application.service;
 
+import Loan.application.port.out.ILoanRepository;
 import ReaderAccounts.application.domain.model.AccountCreated;
+import ReaderAccounts.application.domain.model.AccountDeleted;
 import ReaderAccounts.application.domain.model.Reader;
 import ReaderAccounts.application.ports.in.*;
 import ReaderAccounts.application.ports.out.*;
@@ -12,14 +14,18 @@ public class ManageAccountsService implements IManageAccountsUseCase {
 
 	private ICatalogEventPublisher domainEventPublisher;
 	private IUserRepository readerRepository;
+	private ILoanPort loanPort;
+	private IPaymentsPort paymentsPort;
 	CreateAccount createAccount;
 	DeleteAccount deleteAccount;
 
-	public ManageAccountsService(ICatalogEventPublisher domainEventPublisher, CreateAccount createAccount, DeleteAccount deleteAccount, IUserRepository readerRepository) {
+	public ManageAccountsService(ICatalogEventPublisher domainEventPublisher, CreateAccount createAccount, DeleteAccount deleteAccount, IUserRepository readerRepository, ILoanPort loanPort, IPaymentsPort paymentsPort) {
 		this.domainEventPublisher = domainEventPublisher;
 		this.createAccount = createAccount;
 		this.deleteAccount = deleteAccount;
 		this.readerRepository = readerRepository;
+		this.loanPort = loanPort;
+		this.paymentsPort = paymentsPort;
 	}
 
 	public void createAccount(Reader reader) {
@@ -36,8 +42,18 @@ public class ManageAccountsService implements IManageAccountsUseCase {
 		}
 	}
 	public void deleteAccount(Reader reader) {
-		// TODO - implement ManageAccountsService.deleteAccount
-		throw new UnsupportedOperationException();
+		int readerId = reader.getReaderId();
+
+		boolean hasActiveLoans   = loanPort.hasActiveLoans(readerId);
+		boolean hasPendingPayments = paymentsPort.hasPendingPayments(readerId);
+
+		if (deleteAccount.canDelete(hasActiveLoans, hasPendingPayments)) {
+			//readerRepository.deleteReader(readerId);
+			domainEventPublisher.publish(new AccountDeleted(readerId, LocalDateTime.now()));
+		} else {
+			throw new IllegalArgumentException(
+					"Cannot delete account: reader has active loans or pending payments.");
+		}
 	}
 
 

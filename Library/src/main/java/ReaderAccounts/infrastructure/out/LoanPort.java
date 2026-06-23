@@ -2,13 +2,13 @@ package ReaderAccounts.infrastructure.out;
 
 import ReaderAccounts.application.ports.out.*;
 
-public class CopyAdapter implements ICopyPort {
+public class LoanPort implements ILoanPort {
 
 	/**
 	 * 
 	 * @param readerId
 	 */
-	public int checkLoans(int readerId) {
+	public boolean hasActiveLoans(int readerId) {
 		// TODO - implement CopyAdapter.checkLoans
 		throw new UnsupportedOperationException();
 	}
