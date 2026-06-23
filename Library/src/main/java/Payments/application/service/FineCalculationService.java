@@ -39,7 +39,7 @@ public class FineCalculationService implements ILoanOverdueEventListener {
 		paymentRepository.savePayment(payment);
 
 
-		domainEventPublisher.publish(payment.getDomainEvents().getFirst());
+		domainEventPublisher.publish(payment.getDomainEvents().get(0));
 
 
 	}

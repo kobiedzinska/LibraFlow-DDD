@@ -1,11 +1,11 @@
 package ReaderAccounts.application.ports.out;
 
-public interface PaymentsPort {
+public interface IPaymentsPort {
 
 	/**
 	 * 
 	 * @param readerId
 	 */
-	int checkPayments(int readerId);
+	boolean hasPendingPayments(int readerId);
 
 }

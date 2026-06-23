@@ -4,31 +4,16 @@ import ReaderAccounts.application.domain.model.*;
 
 public class DeleteAccount {
 
-	/**
-	 * 
-	 * @param reader
-	 */
-	public Boolean checkNoLoans(Reader reader) {
-		// TODO - implement DeleteAccount.checkNoLoans
-		throw new UnsupportedOperationException();
+	public Boolean checkNoLoans(boolean hasActiveLoans) {
+		return !hasActiveLoans;
 	}
 
-	/**
-	 * 
-	 * @param reader
-	 */
-	public Boolean checkisNoPayements(Reader reader) {
-		// TODO - implement DeleteAccount.checkisNoPayements
-		throw new UnsupportedOperationException();
+	public Boolean checkisNoPayements(boolean hasPendingPayments) {
+		return !hasPendingPayments;
 	}
 
-	/**
-	 * 
-	 * @param user
-	 */
-	public void delete(User user) {
-		// TODO - implement DeleteAccount.delete
-		throw new UnsupportedOperationException();
+	// reguła zbiorcza: konto można usunąć tylko bez wypożyczeń i bez zaległości
+	public boolean canDelete(boolean hasActiveLoans, boolean hasPendingPayments) {
+		return checkNoLoans(hasActiveLoans) && checkisNoPayements(hasPendingPayments);
 	}
-
 }

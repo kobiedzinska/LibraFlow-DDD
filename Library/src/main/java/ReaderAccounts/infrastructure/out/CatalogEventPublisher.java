@@ -2,7 +2,7 @@ package ReaderAccounts.infrastructure.out;
 
 import ReaderAccounts.application.ports.out.*;
 
-public class DomainEventPublisherAdapter implements IDomainEventPublisher {
+public class CatalogEventPublisher implements ICatalogEventPublisher {
 
 	public void publish() {
 		// TODO - implement DomainEventPublisherAdapter.publish

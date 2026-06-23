@@ -2,14 +2,14 @@ package ReaderAccounts.infrastructure.out;
 
 import ReaderAccounts.application.ports.out.*;
 
-public class CopyAdapter implements CopyPort {
+public class PaymentsPort implements IPaymentsPort {
 
 	/**
 	 * 
 	 * @param readerId
 	 */
-	public int checkLoans(int readerId) {
-		// TODO - implement CopyAdapter.checkLoans
+	public boolean hasPendingPayments(int readerId) {
+		// TODO - implement PaymentsAdapter.checkPayments
 		throw new UnsupportedOperationException();
 	}
 

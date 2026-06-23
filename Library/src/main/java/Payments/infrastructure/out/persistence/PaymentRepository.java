@@ -13,7 +13,7 @@ import static Payments.infrastructure.out.persistence.PaymentFileMapper.generate
 import static Payments.infrastructure.out.persistence.PaymentFileMapper.mapToLine;
 
 public class PaymentRepository implements IPaymentRepository {
-	private static final Path FILE_PATH = Path.of("payments.txt");
+	private static final Path FILE_PATH = Path.of("Database/payments.txt");
 
 
 	/**
