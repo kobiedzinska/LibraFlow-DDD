@@ -4,7 +4,9 @@ import Payments.application.domain.model.Payment;
 import Payments.application.domain.model.PaymentStatus;
 import Payments.application.ports.in.*;
 import Payments.application.ports.out.http.IDomainEventPublisher;
+import Payments.application.ports.out.http.IPaymentGatewayAdapter;
 import Payments.application.ports.out.persistence.IPaymentRepository;
+import Payments.infrastructure.out.PaymentGatewayAdapter;
 
 import java.util.NoSuchElementException;
 
@@ -25,8 +27,13 @@ public class FinePaymentService implements IPaymentUseCase {
 			throw new IllegalArgumentException("Payment not found with ID: " + paymentId);
 		}
 
-		// Update the payment status to PAID
-		payment.setStatus(PaymentStatus.PAID);
+		IPaymentGatewayAdapter paymentGatewayAdapter = new PaymentGatewayAdapter();
+
+		if(paymentGatewayAdapter.processExternalPayment(paymentId, payment.getAmount())){
+			// Update the payment status to PAID
+			payment.setStatus(PaymentStatus.PAID);
+		};
+
 
 		// Save the updated payment to the repository
 		paymentRepository.savePayment(payment);
