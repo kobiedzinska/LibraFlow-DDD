@@ -1,3 +1,4 @@
+import Catalog.application.ports.in.ICatalogPort;
 import Catalog.application.ports.out.ICopyRepository;
 import Catalog.application.service.CopyStatusService;
 import Catalog.infrastructure.in.LoanEventListener;
@@ -8,8 +9,6 @@ import Loan.application.service.LoanService;
 import Loan.infrastructure.in.LoanController;
 import Loan.infrastructure.out.*;
 
-import java.util.concurrent.TimeUnit;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -18,12 +17,13 @@ public class Main {
         LoanCopyPolicy loanCopyPolicy = new LoanCopyPolicy();
         IPaymentPort paymentPort = new PaymentPort();
         IReaderSnapshotAdapter readerSnapshotAdapter = new ReaderSnapshotAdapter();
-        ICopyStatusAdapter copyStatusAdapter = new CopyStatusAdapter();
+
 
 
         ICopyRepository copyRepository = new CopyRepository();
         CopyStatusService copyStatusService = new CopyStatusService(copyRepository);
-
+        ICatalogPort catalogCopyQuery = new CopyStatusService(copyRepository);
+        ICopyStatusAdapter copyStatusAdapter = new CopyStatusAdapter(catalogCopyQuery);
 
         LoanEventListener loanEventListener = new LoanEventListener(copyStatusService);
         domainEventPublisher.subscribe(loanEventListener);
