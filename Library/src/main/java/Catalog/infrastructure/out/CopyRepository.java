@@ -107,6 +107,42 @@ public class CopyRepository implements ICopyRepository {
 		return null;
 	}
 
+
+
+	@Override
+	public List<Copy> findByBookId(int bookId) {
+
+		List<Copy> result = new ArrayList<>();
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+
+				if (line.isBlank()) continue;
+
+				String[] parts = line.split(";");
+
+				int bId = Integer.parseInt(parts[1]);
+
+				if (bId == bookId) {
+
+					result.add(new Copy(
+							Integer.parseInt(parts[0]),
+							bId,
+							CopyStatus.valueOf(parts[2])
+					));
+				}
+			}
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return result;
+	}
+
 	private String toLine(Copy copy) {
 
 		return copy.getCopyId() + ";" +

@@ -22,7 +22,6 @@ public class CopyStatusService implements ICopyStatusEventListener{
 	 * @param copyId
 	 */
 	public void handleCopyBorrowed(int copyId) {
-		System.out.println("Catalog/copyStatusService: handleCopyBorrowed");
 		Copy copy = copyRepository.findCopy(copyId);
 
 		if (copy == null) {

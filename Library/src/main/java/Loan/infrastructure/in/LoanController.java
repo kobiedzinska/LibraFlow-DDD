@@ -11,7 +11,7 @@ public class LoanController {
 	}
 
 	public void loanCopy(Integer copyId, Integer readerId) {
-		System.out.println("controller loanCopy");
+
 		loanService.loanCopy(copyId, readerId);
 	}
 

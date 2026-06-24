@@ -33,7 +33,6 @@ public class LoanService implements IManageLoanUseCase {
 	 * @param readerId
 	 */
 	public void loanCopy(int copyId, int readerId) {
-		System.out.println("Service loanCopy");
 		LocalDateTime now = LocalDateTime.now();
 
 		ReaderSnapshot reader = readerSnapshotAdapter.getReaderSnapshot(readerId);
@@ -45,7 +44,6 @@ public class LoanService implements IManageLoanUseCase {
         }
         reader.setActiveLoansCount(activeLoans);
 		CopyAvailability availability = copyStatusAdapter.getCopyStatus(copyId);
-		System.out.println(loanPolicy.canBorrow(reader, availability));
 		if (!loanPolicy.canBorrow(reader, availability))return;
 
 

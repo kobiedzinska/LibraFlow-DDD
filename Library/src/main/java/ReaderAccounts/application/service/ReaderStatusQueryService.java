@@ -14,8 +14,7 @@ public class ReaderStatusQueryService implements IAccountReaderPort {
     }
     @Override
     public ReaderStatusDto getReaderStatus(int readerId) {
-        System.out.println("TEST READERS:");
-        System.out.println(readerRepository.findUser(1));
+
 
         Reader reader = readerRepository.findUser(readerId);
 

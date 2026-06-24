@@ -128,4 +128,51 @@ public class BookRepository implements IBookRepository {
 				categories + ";" +
 				book.getDescription();
 	}
+
+
+	@Override
+	public List<Book> search(String query) {
+
+		List<Book> result = new ArrayList<>();
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+
+				if (line.isBlank()) continue;
+
+				String[] parts = line.split(";");
+
+				Book book = new Book(
+						Integer.parseInt(parts[0]),
+						parts[1],
+						parts[2],
+						parts[3],
+						parts[4],
+						parts[5],
+						List.of(parts[6].split(",")),
+						parts[7]
+				);
+
+				if (matches(book, query)) {
+					result.add(book);
+				}
+			}
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return result;
+	}
+
+	private boolean matches(Book b, String q) {
+		String query = q.toLowerCase();
+
+		return b.getTitle().toLowerCase().contains(query)
+				|| b.getAuthor().toLowerCase().contains(query)
+				|| b.getISBN().equals(query);
+	}
 }

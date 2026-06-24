@@ -1,6 +1,11 @@
+import Catalog.application.ports.in.ICatalogBrowsePort;
 import Catalog.application.ports.in.ICopyStatusEventListener;
+import Catalog.application.ports.out.IBookRepository;
+import Catalog.application.service.BookQueryService;
 import Catalog.application.service.CopyStatusQueryService;
 import Catalog.infrastructure.in.CatalogAdapter;
+import Catalog.infrastructure.in.UIBrowseAdapter;
+import Catalog.infrastructure.out.BookRepository;
 import ReaderAccounts.application.domain.model.Profile;
 import ReaderAccounts.application.domain.model.Reader;
 import ReaderAccounts.application.ports.in.IAccountReaderPort;
@@ -42,6 +47,8 @@ public class Main {
         IDomainEventPublisher loanDomainEventPublisher = new DomainEventPublisher();
         IPaymentPort paymentPort = new PaymentAdapter();
 
+        IBookRepository bookRepository = new BookRepository();
+
         ICopyRepository copyRepository = new CopyRepository();
 
         // ===================== READER MODULE =====================
@@ -61,7 +68,7 @@ public class Main {
         ManageAccountsControler controller =
                 new ManageAccountsControler(manageAccountsService);
 
-        controller.createReaderAccount(new Reader(
+/*        controller.createReaderAccount(new Reader(
                 "adam",
                 "adam",
                 "adam@adam.adam",
@@ -69,7 +76,7 @@ public class Main {
                 null,
                 -1,
                 false
-        ));
+        ));*/
 
         // ===================== CATALOG MODULE =====================
         ICatalogPort catalogQueryService =
@@ -105,6 +112,14 @@ public class Main {
 
 
         LoanController loanController = new LoanController(loanService);
+
+        ICatalogBrowsePort catalogBrowsePort = new BookQueryService(bookRepository, copyRepository);
+
+        UIBrowseAdapter uiBrowseAdapter = new UIBrowseAdapter(catalogBrowsePort);
+
+
+
+        System.out.println(uiBrowseAdapter.search("Wiedzmin"));
 
         // ===================== FLOW =====================
         loanController.loanCopy(1, 1);

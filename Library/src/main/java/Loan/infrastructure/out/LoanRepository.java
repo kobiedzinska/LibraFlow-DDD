@@ -76,7 +76,6 @@ public class LoanRepository implements ILoanRepository {
 
 	@Override
 	public Loan findLoan(int loanId) {
-		System.out.println("findLoan");
 
 		try (BufferedReader reader =
 					 new BufferedReader(new FileReader(FILE_PATH))) {
