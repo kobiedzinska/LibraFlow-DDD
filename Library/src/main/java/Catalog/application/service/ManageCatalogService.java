@@ -22,7 +22,14 @@ public class ManageCatalogService implements ICatalogManagementUseCase {
 	 * @param b
 	 */
 	public void addBook(Book b) {
-		bookRepository.saveBook(b);
+		Copy copy = new Copy(
+				-1,
+				b.getBookId(),
+				CopyStatus.AVAILABLE
+		);
+
+		copyRepository.saveCopy(copy);
+
 	}
 
 }

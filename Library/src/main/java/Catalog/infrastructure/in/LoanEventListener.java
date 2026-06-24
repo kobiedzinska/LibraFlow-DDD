@@ -1,9 +1,15 @@
+/*
 package Catalog.infrastructure.in;
 
 import Catalog.application.ports.in.*;
+import Loan.application.domain.model.CopyBorrowed;
+import Loan.application.domain.model.CopyOverdue;
+import Loan.application.domain.model.CopyReturned;
+import SharedKernel.DomainEvent;
+import SharedKernel.EventHandler;
 
 
-public class LoanEventListener {
+public class LoanEventListener implements EventHandler<DomainEvent> {
 
 	public ICopyStatusEventListener copyStatusService;
 
@@ -22,5 +28,22 @@ public class LoanEventListener {
 	public void handleCopyOverdue(int copyId) {
 		copyStatusService.handleCopyOverdue(copyId);
 	}
+*/
+/*	@Override
+	public void handle(DomainEvent event) {
 
-}
+		if (event instanceof CopyBorrowed e) {
+			copyStatusService.handleCopyBorrowed(e.getCopyId());
+		}
+
+		if (event instanceof CopyReturned e) {
+			copyStatusService.handleCopyReturned(e.getCopyId());
+		}
+
+		if (event instanceof CopyOverdue e) {
+			copyStatusService.handleCopyOverdue(e.getCopyId());
+		}
+	}*//*
+
+
+}*/

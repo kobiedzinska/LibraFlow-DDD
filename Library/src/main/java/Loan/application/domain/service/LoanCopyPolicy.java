@@ -14,4 +14,8 @@ public class LoanCopyPolicy {
 		return !reader.getBlocked() && reader.getActiveLoansCount() < 5 && availability == CopyAvailability.AVAILABLE;
 	}
 
+	public boolean isOverdue(Loan loan){
+		return loan.getDueDate().isBefore(loan.getReturnedAt());
+	}
+
 }

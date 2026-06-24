@@ -1,12 +1,11 @@
 package Loan.application.port.out;
 
-import Notifications.application.domain.model.DomainEvent;
+
+import SharedKernel.DomainEvent;
 
 public interface IDomainEventPublisher {
 
-	void publish(Object event);
-
-	void subscribe(Object handler);
+	void publish(DomainEvent event);
 
 /*	void reset();*/
 

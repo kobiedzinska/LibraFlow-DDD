@@ -6,6 +6,12 @@ import Catalog.application.service.CopyStatusQueryService;
 import Catalog.infrastructure.in.CatalogAdapter;
 import Catalog.infrastructure.in.UIBrowseAdapter;
 import Catalog.infrastructure.out.BookRepository;
+import Payments.application.ports.in.ILoanOverdueEventListener;
+import Payments.application.ports.out.persistence.IPaymentRepository;
+import Payments.application.service.FineCalculationService;
+import Payments.infrastructure.in.LoanOverdueHandler;
+import Payments.infrastructure.in.PaymentController;
+import Payments.infrastructure.out.persistence.PaymentRepository;
 import ReaderAccounts.application.domain.model.Profile;
 import ReaderAccounts.application.domain.model.Reader;
 import ReaderAccounts.application.ports.in.IAccountReaderPort;
@@ -25,13 +31,13 @@ import ReaderAccounts.infrastructure.out.persistence.ReaderRepository;
 import Catalog.application.ports.in.ICatalogPort;
 import Catalog.application.ports.out.ICopyRepository;
 import Catalog.application.service.CopyStatusService;
-import Catalog.infrastructure.in.LoanEventListener;
 import Catalog.infrastructure.out.CopyRepository;
 import Loan.application.domain.service.LoanCopyPolicy;
 import Loan.application.port.out.*;
 import Loan.application.service.LoanService;
 import Loan.infrastructure.in.LoanController;
 import Loan.infrastructure.out.*;
+import SharedKernel.EventBus;
 
 import java.time.LocalDateTime;
 
@@ -42,9 +48,14 @@ public class Main {
         IReaderRepository userRepository = new ReaderRepository();
         ILoanPort loanPort = new LoanPort();
         IPaymentsPort paymentsPort = new PaymentsPort();
+        EventBus eventBus = new EventBus();
+        IPaymentRepository paymentRepository = new PaymentRepository();
+        Payments.application.ports.out.http.IDomainEventPublisher paymentDomainEventPublisher = new Payments.infrastructure.out.DomainEventPublisher(eventBus);
+        ILoanOverdueEventListener loanOverdueEventListener = new FineCalculationService(paymentRepository, paymentDomainEventPublisher);
 
+        PaymentController paymentController = new PaymentController();
         ILoanRepository loanRepository = new LoanRepository();
-        IDomainEventPublisher loanDomainEventPublisher = new DomainEventPublisher();
+        IDomainEventPublisher loanDomainEventPublisher = new DomainEventPublisher(eventBus);
         IPaymentPort paymentPort = new PaymentAdapter();
 
         IBookRepository bookRepository = new BookRepository();
@@ -85,10 +96,11 @@ public class Main {
         ICopyStatusEventListener copyStatusService =
                 new CopyStatusService(copyRepository);
 
-        LoanEventListener loanEventListener =
-                new LoanEventListener(copyStatusService);
+/*        LoanEventListener loanEventListener =
+                new LoanEventListener(copyStatusService);*/
 
-        loanDomainEventPublisher.subscribe(loanEventListener);
+        LoanOverdueHandler loanEventListener = new LoanOverdueHandler(loanOverdueEventListener);
+        eventBus.register(loanEventListener);
 
         // ===================== READER QUERY =====================
         IAccountReaderPort accountReaderPort =
@@ -119,13 +131,13 @@ public class Main {
 
 
 
-        System.out.println(uiBrowseAdapter.search("Wiedzmin"));
+        System.out.println(uiBrowseAdapter.search(""));
 
         // ===================== FLOW =====================
-        loanController.loanCopy(1, 1);
+        //loanController.loanCopy(1, 1);
 
 
-        loanController.returnLoan(1);
+        loanController.returnLoan(3);
 
     }
 }

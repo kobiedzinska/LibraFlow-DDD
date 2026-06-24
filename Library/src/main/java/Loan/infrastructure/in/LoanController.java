@@ -10,12 +10,12 @@ public class LoanController {
 		this.loanService = loanService;
 	}
 
-	public void loanCopy(Integer copyId, Integer readerId) {
+	public void loanCopy(int copyId, Integer readerId) {
 
 		loanService.loanCopy(copyId, readerId);
 	}
 
-	public void returnLoan(Integer loanId) {
+	public void returnLoan(int loanId) {
 		loanService.returnLoan(loanId);
 	}
 }

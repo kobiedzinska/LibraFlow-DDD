@@ -34,6 +34,8 @@ public class LoanService implements IManageLoanUseCase {
 	 */
 	public void loanCopy(int copyId, int readerId) {
 		LocalDateTime now = LocalDateTime.now();
+		CopyAvailability availability = copyStatusAdapter.getCopyStatus(copyId);
+
 
 		ReaderSnapshot reader = readerSnapshotAdapter.getReaderSnapshot(readerId);
         int activeLoans = 0;
@@ -43,7 +45,7 @@ public class LoanService implements IManageLoanUseCase {
             throw new RuntimeException(e);
         }
         reader.setActiveLoansCount(activeLoans);
-		CopyAvailability availability = copyStatusAdapter.getCopyStatus(copyId);
+
 		if (!loanPolicy.canBorrow(reader, availability))return;
 
 
@@ -74,30 +76,21 @@ public class LoanService implements IManageLoanUseCase {
 		LocalDateTime now = LocalDateTime.now();
 		Loan loan = loanRepository.findLoan(loanId);
 
-
 		loan.returnCopy();
-
-		if(loan.getDueDate().isBefore(loan.getReturnedAt())){
-			eventPublisher.publish(
-					new CopyOverdue(
-							loan.getCopyId(),
-							loan.getReaderId(),
-							now
-					)
-			);
-
-		}else{
-			eventPublisher.publish(
-					new CopyReturned(
-							loan.getCopyId(),
-							now
-					)
-			);
-		}
-
 		loanRepository.saveLoan(loan);
 
+		eventPublisher.publish(
+				new CopyReturned(
+						loan.getCopyId(),
+						now
+				)
+		);
 
+		if(loanPolicy.isOverdue(loan)){
+			eventPublisher.publish(
+				new LoanReturnedLate(loanId, loan.getReaderId(), loan.getDueDate(), loan.getReturnedAt())
+			);
+		}
 	}
 
 }

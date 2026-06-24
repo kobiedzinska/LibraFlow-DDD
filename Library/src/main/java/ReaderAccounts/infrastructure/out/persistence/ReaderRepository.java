@@ -22,61 +22,6 @@ public class ReaderRepository implements IReaderRepository {
 			Path.of("Library/src/main/resources/Database/readers.txt");
 
 
-/*	public void saveReader(Reader reader) {
-
-		if (reader.getReaderId() == 0) {
-            try {
-                reader.setReaderId(generateNextId(Path.of(FILE_PATH)));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-		List<String> lines = new ArrayList<>();
-		boolean updated = false;
-
-		File file = new File(FILE_PATH);
-
-		if (file.exists()) {
-
-			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-
-				String line;
-
-				while ((line = br.readLine()) != null) {
-
-					String[] data = line.split(";");
-
-					int id = Integer.parseInt(data[0]);
-
-					if (id == reader.getReaderId()) {
-						lines.add(toLine(reader));
-						updated = true;
-					} else {
-						lines.add(line);
-					}
-				}
-
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		if (!updated) {
-			lines.add(toLine(reader));
-		}
-
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-
-			for (String line : lines) {
-				bw.write(line);
-				bw.newLine();
-			}
-
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}*/
 	@Override
 	public void saveReader(Reader reader) {
 

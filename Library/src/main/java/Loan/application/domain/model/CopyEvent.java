@@ -1,8 +1,10 @@
 package Loan.application.domain.model;
 
+import SharedKernel.DomainEvent;
+
 import java.time.LocalDateTime;
 
-public abstract class CopyEvent {
+public abstract class CopyEvent implements DomainEvent {
     private final int copyId;
     private final LocalDateTime occurredOn;
 
