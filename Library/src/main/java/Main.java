@@ -1,13 +1,20 @@
+import Catalog.application.domain.model.Book;
+import Catalog.application.domain.model.Copy;
+import Catalog.application.domain.model.CopyStatus;
 import Catalog.application.ports.in.ICatalogBrowsePort;
+import Catalog.application.ports.in.ICatalogManagementUseCase;
 import Catalog.application.ports.in.ICopyStatusEventListener;
 import Catalog.application.ports.out.IBookRepository;
 import Catalog.application.service.BookQueryService;
 import Catalog.application.service.CopyStatusQueryService;
+import Catalog.application.service.ManageCatalogService;
 import Catalog.infrastructure.in.*;
 import Catalog.infrastructure.out.BookRepository;
 import Payments.application.ports.in.ILoanOverdueEventListener;
+import Payments.application.ports.in.IPaymentUseCase;
 import Payments.application.ports.out.persistence.IPaymentRepository;
 import Payments.application.service.FineCalculationService;
+import Payments.application.service.FinePaymentService;
 import Payments.infrastructure.in.LoanOverdueHandler;
 import Payments.infrastructure.in.PaymentController;
 import Payments.infrastructure.out.persistence.PaymentRepository;
@@ -39,6 +46,7 @@ import Loan.infrastructure.out.*;
 import SharedKernel.EventBus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -52,7 +60,10 @@ public class Main {
         Payments.application.ports.out.http.IDomainEventPublisher paymentDomainEventPublisher = new Payments.infrastructure.out.DomainEventPublisher(eventBus);
         ILoanOverdueEventListener loanOverdueEventListener = new FineCalculationService(paymentRepository, paymentDomainEventPublisher);
 
-        PaymentController paymentController = new PaymentController();
+
+        IPaymentUseCase paymentUseCase = new FinePaymentService(paymentDomainEventPublisher, paymentRepository);
+
+        PaymentController paymentController = new PaymentController(paymentUseCase);
         ILoanRepository loanRepository = new LoanRepository();
         IDomainEventPublisher loanDomainEventPublisher = new DomainEventPublisher(eventBus);
         IPaymentPort paymentPort = new PaymentAdapter();
@@ -103,6 +114,9 @@ public class Main {
         eventBus.register(new CopyReturnedHandler(copyStatusService));
         eventBus.register(new LoanOverdueHandler(loanOverdueEventListener));
 
+
+        ICatalogManagementUseCase catalogManagementUseCase = new ManageCatalogService(bookRepository, copyRepository);
+
         // ===================== READER QUERY =====================
         IAccountReaderPort accountReaderPort =
                 new ReaderStatusQueryService(userRepository);
@@ -131,14 +145,21 @@ public class Main {
         UIBrowseAdapter uiBrowseAdapter = new UIBrowseAdapter(catalogBrowsePort);
 
 
-
+/*        Book b = new Book(-1, "Wiedzmin, Tajemnicza podróż","Andrzej Sapkowski","9788375780636","SuperNowa","1990", List.of("Fantasy", "Przygoda"),"Saga o wiedzminie");
+        catalogManagementUseCase.addBook(b);*/
+/*        Copy c = new Copy(-1, 3, CopyStatus.AVAILABLE);
+        catalogManagementUseCase.addCopy(c);
+        c = new Copy(-1, 3, CopyStatus.AVAILABLE);
+        catalogManagementUseCase.addCopy(c);
+        c = new Copy(-1, 3, CopyStatus.AVAILABLE);
+        catalogManagementUseCase.addCopy(c);*/
 
 
         // ===================== FLOW =====================
         //loanController.loanCopy(1, 1);
+        //loanController.returnLoan(5);
+        paymentController.processPayment(5);
 
-
-        loanController.returnLoan(3);
         System.out.println(uiBrowseAdapter.search(""));
     }
 }

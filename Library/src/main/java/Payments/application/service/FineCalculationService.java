@@ -1,6 +1,8 @@
 package Payments.application.service;
 
 import Payments.application.domain.model.Payment;
+import Payments.application.domain.model.PaymentCompleted;
+import Payments.application.domain.model.PaymentOverdue;
 import Payments.application.ports.in.*;
 import Payments.application.domain.service.*;
 import Payments.application.ports.out.http.IDomainEventPublisher;
@@ -28,7 +30,7 @@ public class FineCalculationService implements ILoanOverdueEventListener {
 
 	@Override
 	public void handleLoanOverdue(LocalDateTime dueDate, LocalDateTime returnDate, int clientId, int loanId) {
-		// TODO - implement FineCalculationService.handleLoanOverdue
+		/*// TODO - implement FineCalculationService.handleLoanOverdue
 
 		// Obliczenie kwoty pending, potrzebujemy reader ID i loan ID Calculator
 		calculateFine = new CalculateFine();
@@ -39,7 +41,15 @@ public class FineCalculationService implements ILoanOverdueEventListener {
 		paymentRepository.savePayment(payment);
 
 
-		domainEventPublisher.publish(payment.getDomainEvents().get(0));
+		domainEventPublisher.publish(payment.getDomainEvents().get(0));*/
+		calculateFine = new CalculateFine();
+		double fine = calculateFine.calculate(dueDate, returnDate);
+		Payment payment = Payment.create(clientId, loanId, fine);
+
+
+		paymentRepository.savePayment(payment);
+		payment.getDomainEvents()
+				.forEach(domainEventPublisher::publish);
 
 
 	}

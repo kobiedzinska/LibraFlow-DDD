@@ -5,7 +5,7 @@ import SharedKernel.DomainEvent;
 
 import java.time.LocalDateTime;
 
-public class LoanReturnedLate
+public class LoanOverdue
         implements DomainEvent {
 
     private final int loanId;
@@ -13,7 +13,7 @@ public class LoanReturnedLate
     private final LocalDateTime dueDate;
     private final LocalDateTime returnedAt;
 
-    public LoanReturnedLate(int loanId, int readerId, LocalDateTime dueDate, LocalDateTime returnedAt) {
+    public LoanOverdue(int loanId, int readerId, LocalDateTime dueDate, LocalDateTime returnedAt) {
         this.loanId = loanId;
         this.readerId = readerId;
         this.dueDate = dueDate;

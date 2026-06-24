@@ -15,7 +15,7 @@ public class ReaderStatusService implements IReaderStatusEventListener {
 
 	public void handlePaymentOverdue(int readerId) {
 		Reader reader = readerRepository.findUser(readerId);
-		if (reader == null) {
+		if (reader != null) {
 			reader.block();
 			readerRepository.saveReader(reader);
 		}else {
@@ -26,7 +26,7 @@ public class ReaderStatusService implements IReaderStatusEventListener {
 
 	public void handlePaymentCompleted(int readerId) {
 		Reader reader = readerRepository.findUser(readerId);
-		if (reader == null) {
+		if (reader != null) {
 			reader.unblock();
 			readerRepository.saveReader(reader);
 		}else {

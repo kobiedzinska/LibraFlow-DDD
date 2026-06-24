@@ -36,14 +36,14 @@ public class Payment {
 	 * @param readerId
 	 */
 
-	public Payment(int readerId, int loanId, double fine) {
-		this.readerId = readerId;
-		this.amount = fine;
-		this.loanId = loanId;
-		this.paymentStatus = PaymentStatus.PENDING;
-		paymentId = -1;
-		this.paymentEvents = new ArrayList<>();
 
+	public Payment(int paymentId, int readerId, int loanId, double amount, LocalDateTime dueDate, PaymentStatus paymentStatus) {
+		this.paymentId = paymentId;
+		this.readerId = readerId;
+		this.loanId = loanId;
+		this.amount = amount;
+		this.dueDate = dueDate;
+		this.paymentStatus = paymentStatus;
 	}
 
 	public PaymentCompleted complete() {
@@ -58,6 +58,18 @@ public class Payment {
 		PaymentOverdue event = new PaymentOverdue(paymentId, readerId, LocalDateTime.now());
 		paymentEvents.add(event);
 		return event;
+	}
+
+
+	public static Payment create(int readerId, int loanId, double amount) {
+		return new Payment(
+				-1,
+				readerId,
+				loanId,
+				amount,
+				LocalDateTime.now().plusDays(30),
+				PaymentStatus.PENDING
+		);
 	}
 
 	@Override

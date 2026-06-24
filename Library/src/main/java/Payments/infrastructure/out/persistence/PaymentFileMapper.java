@@ -29,7 +29,7 @@ public class PaymentFileMapper {
                 p.getDueDate() + ";" +
                 p.getPaymentStatus();
     }
-    public static Payment mapToPayment(String line) {
+/*    public static Payment mapToPayment(String line) {
 
         String[] parts = line.split(";");
 
@@ -47,5 +47,26 @@ public class PaymentFileMapper {
         p.setPaymentStatus(status);
 
         return p;
+    }*/
+
+    public static Payment mapToPayment(String line) {
+
+        String[] parts = line.split(";");
+
+        int paymentId = Integer.parseInt(parts[0]);
+        int readerId = Integer.parseInt(parts[1]);
+        int loanId = Integer.parseInt(parts[2]);
+        double amount = Double.parseDouble(parts[3]);
+        LocalDateTime dueDate = LocalDateTime.parse(parts[4]);
+        PaymentStatus status = PaymentStatus.valueOf(parts[5]);
+
+        return new Payment(
+                paymentId,
+                readerId,
+                loanId,
+                amount,
+                dueDate,
+                status
+        );
     }
 }

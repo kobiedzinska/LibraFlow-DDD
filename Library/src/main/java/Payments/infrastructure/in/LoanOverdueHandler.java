@@ -1,7 +1,6 @@
 package Payments.infrastructure.in;
 
-import Loan.application.domain.model.Loan;
-import Loan.application.domain.model.LoanReturnedLate;
+import Loan.application.domain.model.LoanOverdue;
 import Payments.application.ports.in.ILoanOverdueEventListener;
 import SharedKernel.EventHandler;
 
@@ -9,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LoanOverdueHandler implements EventHandler<LoanReturnedLate> {
+public class LoanOverdueHandler implements EventHandler<LoanOverdue> {
     private final ILoanOverdueEventListener fineCalculationService;
 
     public LoanOverdueHandler(ILoanOverdueEventListener fineCalculationService) {
@@ -17,7 +16,7 @@ public class LoanOverdueHandler implements EventHandler<LoanReturnedLate> {
     }
 
     @Override
-    public void handle(LoanReturnedLate event) {
+    public void handle(LoanOverdue event) {
         fineCalculationService.handleLoanOverdue(event.getDueDate(), event.getReturnedAt(), event.getReaderId(), event.getLoanId());
     }
 

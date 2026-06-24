@@ -88,7 +88,7 @@ public class LoanService implements IManageLoanUseCase {
 
 		if(loanPolicy.isOverdue(loan)){
 			eventPublisher.publish(
-				new LoanReturnedLate(loanId, loan.getReaderId(), loan.getDueDate(), loan.getReturnedAt())
+				new LoanOverdue(loanId, loan.getReaderId(), loan.getDueDate(), loan.getReturnedAt())
 			);
 		}
 	}

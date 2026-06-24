@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 public class PaymentCompleted extends PaymentEvent {
 
 	private int paymentId;
+	private int readerId;
+
 	private LocalDateTime occuredOn;
 
 	/**
@@ -12,9 +14,10 @@ public class PaymentCompleted extends PaymentEvent {
 	 * @param paymentId
 	 * @param occuredOn
 	 */
-	public PaymentCompleted(int paymentId, int readerId, LocalDateTime occuredOn) {
-		// TODO - implement PaymentCompleted.PaymentCompleted
-		throw new UnsupportedOperationException();
-	}
 
+	public PaymentCompleted(int paymentId, int readerId,  LocalDateTime occuredOn) {
+		this.paymentId = paymentId;
+		this.readerId = readerId;
+		this.occuredOn = occuredOn;
+	}
 }

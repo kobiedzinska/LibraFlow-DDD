@@ -15,7 +15,9 @@ public class BookRepository implements IBookRepository {
 
 	@Override
 	public void saveBook(Book book) {
-
+		if (book.getBookId() == -1) {
+			book.setBookId(getNextId());
+		}
 
 		List<String> lines = new ArrayList<>();
 		boolean found = false;
@@ -174,5 +176,24 @@ public class BookRepository implements IBookRepository {
 		return b.getTitle().toLowerCase().contains(query)
 				|| b.getAuthor().toLowerCase().contains(query)
 				|| b.getISBN().equals(query);
+	}
+
+
+	private int getNextId() {
+		int maxId = 0;
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				int id = Integer.parseInt(line.split(";")[0]);
+				maxId = Math.max(maxId, id);
+			}
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return maxId + 1;
 	}
 }

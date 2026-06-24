@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static Payments.infrastructure.out.persistence.PaymentFileMapper.generateNextId;
@@ -43,16 +44,38 @@ public class PaymentRepository implements IPaymentRepository {
 	@Override
 	public void savePayment(Payment p) {
 		try {
-			int newId = generateNextId(FILE_PATH);
-			p.setPaymentId(newId);
 
-			String line = mapToLine(p);
+			if (p.getPaymentId() == -1) {
+				int newId = generateNextId(FILE_PATH);
+				p.setPaymentId(newId);
 
-			Files.writeString(
+				Files.writeString(
+						FILE_PATH,
+						mapToLine(p) + System.lineSeparator(),
+						StandardOpenOption.CREATE,
+						StandardOpenOption.APPEND
+				);
+
+				return;
+			}
+
+			List<String> updatedLines = Files.lines(FILE_PATH)
+					.map(line -> {
+						Payment existing = PaymentFileMapper.mapToPayment(line);
+
+						if (existing.getPaymentId() == p.getPaymentId()) {
+							return mapToLine(p); // UPDATE
+						}
+
+						return line;
+					})
+					.toList();
+
+			Files.write(
 					FILE_PATH,
-					line + System.lineSeparator(),
-					StandardOpenOption.CREATE,
-					StandardOpenOption.APPEND
+					updatedLines,
+					StandardOpenOption.TRUNCATE_EXISTING,
+					StandardOpenOption.CREATE
 			);
 
 		} catch (IOException e) {

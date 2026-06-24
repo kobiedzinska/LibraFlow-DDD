@@ -14,6 +14,9 @@ public class CopyRepository implements ICopyRepository {
 
 	@Override
 	public void saveCopy(Copy copy) {
+		if (copy.getCopyId() == -1) {
+			copy.setCopyId(getNextId());
+		}
 
 		List<String> lines = new ArrayList<>();
 		boolean found = false;
@@ -148,5 +151,24 @@ public class CopyRepository implements ICopyRepository {
 		return copy.getCopyId() + ";" +
 				copy.getBookId() + ";" +
 				copy.getCopyStatus();
+	}
+
+
+	private int getNextId() {
+		int maxId = 0;
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				int id = Integer.parseInt(line.split(";")[0]);
+				maxId = Math.max(maxId, id);
+			}
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return maxId + 1;
 	}
 }
