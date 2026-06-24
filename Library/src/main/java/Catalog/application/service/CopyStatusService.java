@@ -8,7 +8,7 @@ import Catalog.application.ports.out.*;
 
 
 
-public class CopyStatusService implements ICopyStatusEventListener, ICatalogPort {
+public class CopyStatusService implements ICopyStatusEventListener{
 
 	private ICopyRepository copyRepository;
 
@@ -21,7 +21,7 @@ public class CopyStatusService implements ICopyStatusEventListener, ICatalogPort
 	 * 
 	 * @param copyId
 	 */
-	public void handleCopyBorrowed(Integer copyId) {
+	public void handleCopyBorrowed(int copyId) {
 		System.out.println("Catalog/copyStatusService: handleCopyBorrowed");
 		Copy copy = copyRepository.findCopy(copyId);
 
@@ -36,10 +36,10 @@ public class CopyStatusService implements ICopyStatusEventListener, ICatalogPort
 	}
 
 	/**
-	 * 
+	 *
 	 * @param copyId
 	 */
-	public void handleCopyReturned(Integer copyId) {
+	public void handleCopyReturned(int copyId) {
 
 		Copy copy = copyRepository.findCopy(copyId);
 
@@ -54,11 +54,11 @@ public class CopyStatusService implements ICopyStatusEventListener, ICatalogPort
 	}
 
 	/**
-	 * 
+	 *
 	 * @param copyId
 	 */
 	@Override
-	public void handleCopyOverdue(Integer copyId) {
+	public void handleCopyOverdue(int copyId) {
 
 		Copy copy = copyRepository.findCopy(copyId);
 
@@ -72,27 +72,7 @@ public class CopyStatusService implements ICopyStatusEventListener, ICatalogPort
 		copyRepository.saveCopy(copy);
 	}
 
-	@Override
-	public CopyStatusDto getCopyStatus(Integer copyId) {
-		Copy copy = findCopyOrThrow(copyId);
-		return new CopyStatusDto(copy.getCopyId(), toPublicStatus(copy.getCopyStatus()));
-	}
 
-	private CopyStatus toPublicStatus(CopyStatus internalStatus) {
-		return switch (internalStatus) {
-			case AVAILABLE -> CopyStatus.AVAILABLE;
-			case BORROWED -> CopyStatus.BORROWED;
-			case  OVERDUE -> CopyStatus.OVERDUE;
-		};
-	}
-
-	private Copy findCopyOrThrow(Integer copyId) {
-		Copy copy = copyRepository.findCopy(copyId);
-		if (copy == null) {
-			throw new IllegalArgumentException("Copy not found: " + copyId);
-		}
-		return copy;
-	}
 
 
 }

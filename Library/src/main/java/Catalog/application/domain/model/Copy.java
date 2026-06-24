@@ -2,12 +2,12 @@ package Catalog.application.domain.model;
 
 public class Copy {
 
-	private Integer copyId;
-	private Integer bookId;
+	private int copyId;
+	private int bookId;
 	private CopyStatus copyStatus;
 
 
-	public Copy(Integer copyId, Integer bookId, CopyStatus copyStatus) {
+	public Copy(int copyId, int bookId, CopyStatus copyStatus) {
 		this.copyId = copyId;
 		this.bookId = bookId;
 		this.copyStatus = copyStatus;
@@ -23,19 +23,19 @@ public class Copy {
 		copyStatus=CopyStatus.OVERDUE;
 	}
 
-	public Integer getCopyId() {
+	public int getCopyId() {
 		return copyId;
 	}
 
-	public void setCopyId(Integer copyId) {
+	public void setCopyId(int copyId) {
 		this.copyId = copyId;
 	}
 
-	public Integer getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(Integer bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
 

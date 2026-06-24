@@ -11,15 +11,15 @@ public class LoanEventListener {
 		this.copyStatusService = copyStatusService;
 	}
 
-	public void handleCopyBorrowed(Integer copyId) {
+	public void handleCopyBorrowed(int copyId) {
 		copyStatusService.handleCopyBorrowed(copyId);
 	}
 
-	public void handleCopyReturned(Integer copyId) {
+	public void handleCopyReturned(int copyId) {
 		copyStatusService.handleCopyReturned(copyId);
 	}
 
-	public void handleCopyOverdue(Integer copyId) {
+	public void handleCopyOverdue(int copyId) {
 		copyStatusService.handleCopyOverdue(copyId);
 	}
 

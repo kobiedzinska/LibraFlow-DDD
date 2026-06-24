@@ -7,18 +7,18 @@ public interface ICopyStatusEventListener {
 	 * 
 	 * @param copyId
 	 */
-	void handleCopyBorrowed(Integer copyId);
+	void handleCopyBorrowed(int copyId);
 
 	/**
 	 * 
 	 * @param copyId
 	 */
-	void handleCopyReturned(Integer copyId);
+	void handleCopyReturned(int copyId);
 
 	/**
 	 * 
 	 * @param copyId
 	 */
-	void handleCopyOverdue(Integer copyId);
+	void handleCopyOverdue(int copyId);
 
 }

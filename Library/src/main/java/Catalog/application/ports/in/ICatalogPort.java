@@ -1,6 +1,6 @@
 package Catalog.application.ports.in;
 
 public interface ICatalogPort {
-    CopyStatusDto getCopyStatus(Integer copyId);
+    CopyStatusDto getCopyStatus(int copyId);
 }
 

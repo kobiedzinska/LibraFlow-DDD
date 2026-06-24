@@ -6,7 +6,7 @@ import Catalog.application.ports.in.ICatalogPort;
 import Loan.application.port.out.*;
 import Loan.application.domain.model.*;
 
-public class CopyStatusAdapter implements ICopyStatusAdapter {
+public class CopyStatusAdapter implements ICopyStatusPort {
 
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class CopyStatusAdapter implements ICopyStatusAdapter {
 	}
 
 	@Override
-	public CopyAvailability getCopyStatus(Integer copyId) {
+	public CopyAvailability getCopyStatus(int copyId) {
 		CopyStatusDto dto = catalogCopyQuery.getCopyStatus(copyId);
 		return mapToAvailability(dto.status());
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Book {
 
-	private Integer bookId;
+	private int bookId;
 	private String title;
 	private String author;
 	private String ISBN;
@@ -13,7 +13,7 @@ public class Book {
 	private List<String> category;
 	private String description;
 
-	public Book(Integer bookId, String title, String author, String ISBN, String publisher, String publicationYear, List<String> category, String description) {
+	public Book(int bookId, String title, String author, String ISBN, String publisher, String publicationYear, List<String> category, String description) {
 		this.bookId = bookId;
 		this.title = title;
 		this.author = author;
@@ -24,11 +24,11 @@ public class Book {
 		this.description = description;
 	}
 
-	public Integer getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(Integer bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
 

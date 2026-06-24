@@ -6,6 +6,7 @@ import Loan.application.port.in.*;
 import Loan.application.port.out.*;
 import Loan.application.domain.service.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class LoanService implements IManageLoanUseCase {
@@ -14,10 +15,10 @@ public class LoanService implements IManageLoanUseCase {
 	private IDomainEventPublisher eventPublisher;
 	private LoanCopyPolicy loanPolicy;
 	private IPaymentPort paymentPort;
-	private IReaderSnapshotAdapter readerSnapshotAdapter;
-	private ICopyStatusAdapter copyStatusAdapter;
+	private IReaderSnapshotPort readerSnapshotAdapter;
+	private ICopyStatusPort copyStatusAdapter;
 
-	public LoanService(ILoanRepository loanRepository, IDomainEventPublisher eventPublisher, LoanCopyPolicy loanPolicy, IPaymentPort readerRepository, IReaderSnapshotAdapter readerSnapshotAdapter, ICopyStatusAdapter copyStatusAdapter) {
+	public LoanService(ILoanRepository loanRepository, IDomainEventPublisher eventPublisher, LoanCopyPolicy loanPolicy, IPaymentPort readerRepository, IReaderSnapshotPort readerSnapshotAdapter, ICopyStatusPort copyStatusAdapter) {
 		this.loanRepository = loanRepository;
 		this.eventPublisher = eventPublisher;
 		this.loanPolicy = loanPolicy;
@@ -31,21 +32,25 @@ public class LoanService implements IManageLoanUseCase {
 	 * @param copyId
 	 * @param readerId
 	 */
-	public void loanCopy(Integer copyId, Integer readerId) {
+	public void loanCopy(int copyId, int readerId) {
 		System.out.println("Service loanCopy");
 		LocalDateTime now = LocalDateTime.now();
 
-		ReaderSnapshot reader =
-				readerSnapshotAdapter.getReaderSnapshot(readerId);
-
-		CopyAvailability availability =
-				copyStatusAdapter.getCopyStatus(copyId);
-System.out.println(loanPolicy.canBorrow(reader, availability));
+		ReaderSnapshot reader = readerSnapshotAdapter.getReaderSnapshot(readerId);
+        int activeLoans = 0;
+        try {
+            activeLoans = loanRepository.countActiveLoansByReaderId(readerId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        reader.setActiveLoansCount(activeLoans);
+		CopyAvailability availability = copyStatusAdapter.getCopyStatus(copyId);
+		System.out.println(loanPolicy.canBorrow(reader, availability));
 		if (!loanPolicy.canBorrow(reader, availability))return;
 
 
 		Loan loan = new Loan(
-				null,
+				-1,
 				readerId,
 				copyId,
 				now.plusDays(30),
@@ -67,7 +72,7 @@ System.out.println(loanPolicy.canBorrow(reader, availability));
 	 * 
 	 * @param loanId
 	 */
-	public void returnLoan(Integer loanId) {
+	public void returnLoan(int loanId) {
 		LocalDateTime now = LocalDateTime.now();
 		Loan loan = loanRepository.findLoan(loanId);
 

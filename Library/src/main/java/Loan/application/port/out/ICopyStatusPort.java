@@ -2,12 +2,12 @@ package Loan.application.port.out;
 
 import Loan.application.domain.model.*;
 
-public interface ICopyStatusAdapter {
+public interface ICopyStatusPort {
 
 	/**
 	 * 
 	 * @param copyId
 	 */
-	CopyAvailability getCopyStatus(Integer copyId);
+	CopyAvailability getCopyStatus(int copyId);
 
 }

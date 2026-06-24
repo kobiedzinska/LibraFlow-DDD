@@ -1,8 +1,16 @@
+import Catalog.application.ports.in.ICopyStatusEventListener;
+import Catalog.application.service.CopyStatusQueryService;
+import Catalog.infrastructure.in.CatalogAdapter;
+import ReaderAccounts.application.domain.model.Profile;
+import ReaderAccounts.application.domain.model.Reader;
+import ReaderAccounts.application.ports.in.IAccountReaderPort;
 import ReaderAccounts.application.ports.out.http.ICatalogEventPublisher;
 import ReaderAccounts.application.ports.out.http.ILoanPort;
 import ReaderAccounts.application.ports.out.http.IPaymentsPort;
 import ReaderAccounts.application.ports.out.persistence.IReaderRepository;
 import ReaderAccounts.application.service.ManageAccountsService;
+import ReaderAccounts.application.service.ReaderStatusQueryService;
+import ReaderAccounts.infrastructure.in.AccountReaderAdapter;
 import ReaderAccounts.infrastructure.in.ManageAccountsControler;
 import ReaderAccounts.application.domain.service.*;
 import ReaderAccounts.infrastructure.out.http.CatalogEventPublisher;
@@ -20,51 +28,88 @@ import Loan.application.service.LoanService;
 import Loan.infrastructure.in.LoanController;
 import Loan.infrastructure.out.*;
 
+import java.time.LocalDateTime;
+
 public class Main {
-    public static void main(String[] args) {        ICatalogEventPublisher domainEventPublisher = new CatalogEventPublisher();
+    public static void main(String[] args) {
+// ===================== OUTSIDE SERVICES =====================
+        ICatalogEventPublisher catalogDomainEventPublisher = new CatalogEventPublisher();
         IReaderRepository userRepository = new ReaderRepository();
         ILoanPort loanPort = new LoanPort();
         IPaymentsPort paymentsPort = new PaymentsPort();
 
+        ILoanRepository loanRepository = new LoanRepository();
+        IDomainEventPublisher loanDomainEventPublisher = new DomainEventPublisher();
+        IPaymentPort paymentPort = new PaymentAdapter();
+
+        ICopyRepository copyRepository = new CopyRepository();
+
+        // ===================== READER MODULE =====================
         CreateAccount createAccount = new CreateAccount();
         DeleteAccount deleteAccount = new DeleteAccount();
 
 
-        // Tworzenie instancji ManageAccountsService
         ManageAccountsService manageAccountsService = new ManageAccountsService(
-                domainEventPublisher, createAccount, deleteAccount, userRepository, loanPort, paymentsPort);
+                catalogDomainEventPublisher,
+                createAccount,
+                deleteAccount,
+                userRepository,
+                loanPort,
+                paymentsPort
+        );
 
-        // Tworzenie instancji ManageAccountsControler z wykorzystaniem interfejsu ManageAccountsUseCase
-        ManageAccountsControler controller = new ManageAccountsControler(manageAccountsService);
+        ManageAccountsControler controller =
+                new ManageAccountsControler(manageAccountsService);
 
+        controller.createReaderAccount(new Reader(
+                "adam",
+                "adam",
+                "adam@adam.adam",
+                LocalDateTime.now(),
+                null,
+                -1,
+                false
+        ));
 
+        // ===================== CATALOG MODULE =====================
+        ICatalogPort catalogQueryService =
+                new CopyStatusQueryService(copyRepository);
 
+        ICopyStatusEventListener copyStatusService =
+                new CopyStatusService(copyRepository);
 
-        ILoanRepository loanRepository = new LoanRepository();
-        IDomainEventPublisher domainEventPublisher = new DomainEventPublisher();
+        LoanEventListener loanEventListener =
+                new LoanEventListener(copyStatusService);
+
+        loanDomainEventPublisher.subscribe(loanEventListener);
+
+        // ===================== READER QUERY =====================
+        IAccountReaderPort accountReaderPort =
+                new ReaderStatusQueryService(userRepository);
+
+        // ===================== LOAN MODULE =====================
+
+        IReaderSnapshotPort readerSnapshotPort = new ReaderSnapshotAdapter(accountReaderPort);
         LoanCopyPolicy loanCopyPolicy = new LoanCopyPolicy();
-        IPaymentPort paymentPort = new PaymentPort();
-        IReaderSnapshotAdapter readerSnapshotAdapter = new ReaderSnapshotAdapter();
 
+        ICopyStatusPort copyStatusPort = new CopyStatusAdapter(catalogQueryService);
 
+        LoanService loanService = new LoanService(
+                loanRepository,
+                loanDomainEventPublisher,
+                loanCopyPolicy,
+                paymentPort,
+                readerSnapshotPort,
+                copyStatusPort
+        );
 
-        ICopyRepository copyRepository = new CopyRepository();
-        CopyStatusService copyStatusService = new CopyStatusService(copyRepository);
-        ICatalogPort catalogCopyQuery = new CopyStatusService(copyRepository);
-        ICopyStatusAdapter copyStatusAdapter = new CopyStatusAdapter(catalogCopyQuery);
-
-        LoanEventListener loanEventListener = new LoanEventListener(copyStatusService);
-        domainEventPublisher.subscribe(loanEventListener);
-
-        LoanService loanService = new LoanService(loanRepository, domainEventPublisher, loanCopyPolicy, paymentPort, readerSnapshotAdapter, copyStatusAdapter);
 
         LoanController loanController = new LoanController(loanService);
-        //============ Wypożyczenie
+
+        // ===================== FLOW =====================
         loanController.loanCopy(1, 1);
 
 
-
-        //============ Zwrot wypożyczenia
         loanController.returnLoan(1);
 
     }

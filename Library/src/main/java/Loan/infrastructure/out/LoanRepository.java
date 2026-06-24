@@ -5,6 +5,8 @@ import Loan.application.domain.model.LoanStatus;
 import Loan.application.port.out.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class LoanRepository implements ILoanRepository {
 
 	@Override
 	public void saveLoan(Loan loan) {
-		if (loan.getLoanId() == null) {
+		if (loan.getLoanId() == -1) {
 			loan.setLoanId(getNextId());
 		}
 
@@ -73,8 +75,9 @@ public class LoanRepository implements ILoanRepository {
 	}
 
 	@Override
-	public Loan findLoan(Integer loanId) {
+	public Loan findLoan(int loanId) {
 		System.out.println("findLoan");
+
 		try (BufferedReader reader =
 					 new BufferedReader(new FileReader(FILE_PATH))) {
 
@@ -84,10 +87,9 @@ public class LoanRepository implements ILoanRepository {
 
 				String[] data = line.split(";");
 
-				Integer id =
-						Integer.parseInt(data[0]);
+				int id = Integer.parseInt(data[0]); // FIX
 
-				if (id.equals(loanId)) {
+				if (id == loanId) { // FIX (int -> ==)
 
 					return new Loan(
 							id,
@@ -109,6 +111,17 @@ public class LoanRepository implements ILoanRepository {
 
 		return null;
 	}
+
+	@Override
+	public int countActiveLoansByReaderId(int readerId) throws IOException {
+
+		return (int) Files.lines(Path.of(FILE_PATH))
+				.map(line -> line.split(";"))
+				.filter(data -> Integer.parseInt(data[1]) == readerId)
+				.filter(data -> data[5].equals("BORROWED") || data[5].equals("OVERDUE"))
+				.count();
+	}
+
 
 	private int getNextId() {
 		int maxId = 0;

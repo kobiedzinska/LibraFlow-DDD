@@ -1,9 +1,11 @@
 package Loan.infrastructure.out;
 
 import Loan.application.domain.model.ReaderSnapshot;
-import Loan.application.port.out.IReaderSnapshotAdapter;
+import Loan.application.port.out.IReaderSnapshotPort;
+import ReaderAccounts.application.ports.in.IAccountReaderPort;
+import ReaderAccounts.application.ports.in.ReaderStatusDto;
 
-public class ReaderSnapshotAdapter implements IReaderSnapshotAdapter {
+public class ReaderSnapshotAdapter implements IReaderSnapshotPort{
     /*@Override
     public ReaderSnapshot getReaderSnapshot(Integer readerId) {
 
@@ -19,15 +21,17 @@ public class ReaderSnapshotAdapter implements IReaderSnapshotAdapter {
 
         return snapshot;
     }*/
-    private final IAccountsReaderQuery accountsReaderQuery;
+    private final IAccountReaderPort accountsReaderPort;
 
-    public ReaderSnapshotAdapter(IAccountsReaderQuery accountsReaderQuery) {
-        this.accountsReaderQuery = accountsReaderQuery;
+    public ReaderSnapshotAdapter(IAccountReaderPort accountsReaderPort) {
+        this.accountsReaderPort = accountsReaderPort;
     }
 
     @Override
-    public ReaderSnapshot getReaderSnapshot(Integer readerId) {
-        ReaderStatusDto dto = accountsReaderQuery.getReaderStatus(readerId); // typ Accounts - tylko tu
+    public ReaderSnapshot getReaderSnapshot(int readerId) {
+        //System.out.println("Im in reader adapter");
+        ReaderStatusDto dto = accountsReaderPort.getReaderStatus(readerId);
+        //System.out.println(dto);// typ Accounts - tylko tu
         return mapToSnapshot(dto);                                           // od razu tłumaczone na typ Loan
     }
 
@@ -35,7 +39,6 @@ public class ReaderSnapshotAdapter implements IReaderSnapshotAdapter {
         ReaderSnapshot snapshot = new ReaderSnapshot();
         snapshot.setReaderId(dto.readerId());
         snapshot.setBlocked(dto.isBlocked());
-        snapshot.setActiveLoansCount(dto.activeLoansCount());
         return snapshot;
     }
 }

@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 
 public class Loan {
 
-	private Integer loanId;
-	private Integer readerId;
-	private Integer copyId;
+	private int loanId;
+	private int readerId;
+	private int copyId;
 	private LocalDateTime dueDate;
 	private LocalDateTime borrowedAt;
 	private LoanStatus loanStatus;
 	private LocalDateTime returnedAt;
 
-	public Loan(Integer loanId, Integer readerId, Integer copyId,
+	public Loan(int loanId, int readerId, int copyId,
 				LocalDateTime dueDate,
 				LocalDateTime borrowedAt,
 				LoanStatus loanStatus,
@@ -48,15 +48,15 @@ public class Loan {
 		return dueDate.isBefore(returnedAt);
 	}
 
-	public Integer getLoanId() {
+	public int getLoanId() {
 		return loanId;
 	}
 
-	public void setLoanId(Integer loanId) {
+	public void setLoanId(int loanId) {
 		this.loanId = loanId;
 	}
 
-	public Integer getReaderId() {
+	public int getReaderId() {
 		return readerId;
 	}
 
@@ -64,7 +64,7 @@ public class Loan {
 		this.readerId = readerId;
 	}
 
-	public Integer getCopyId() {
+	public int getCopyId() {
 		return copyId;
 	}
 

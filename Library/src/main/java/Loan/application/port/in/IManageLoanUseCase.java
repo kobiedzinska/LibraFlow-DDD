@@ -7,12 +7,12 @@ public interface IManageLoanUseCase {
 	 * @param copyId
 	 * @param readerId
 	 */
-	void loanCopy(Integer copyId, Integer readerId);
+	void loanCopy(int copyId, int readerId);
 
 	/**
 	 * 
 	 * @param loanId
 	 */
-	void returnLoan(Integer loanId);
+	void returnLoan(int loanId);
 
 }
