@@ -3,8 +3,7 @@ import Catalog.application.ports.in.ICopyStatusEventListener;
 import Catalog.application.ports.out.IBookRepository;
 import Catalog.application.service.BookQueryService;
 import Catalog.application.service.CopyStatusQueryService;
-import Catalog.infrastructure.in.CatalogAdapter;
-import Catalog.infrastructure.in.UIBrowseAdapter;
+import Catalog.infrastructure.in.*;
 import Catalog.infrastructure.out.BookRepository;
 import Payments.application.ports.in.ILoanOverdueEventListener;
 import Payments.application.ports.out.persistence.IPaymentRepository;
@@ -99,8 +98,10 @@ public class Main {
 /*        LoanEventListener loanEventListener =
                 new LoanEventListener(copyStatusService);*/
 
-        LoanOverdueHandler loanEventListener = new LoanOverdueHandler(loanOverdueEventListener);
-        eventBus.register(loanEventListener);
+        eventBus.register(new CopyBorrowedHandler(copyStatusService));
+        eventBus.register(new CopyOverdueHandler(copyStatusService));
+        eventBus.register(new CopyReturnedHandler(copyStatusService));
+        eventBus.register(new LoanOverdueHandler(loanOverdueEventListener));
 
         // ===================== READER QUERY =====================
         IAccountReaderPort accountReaderPort =
@@ -131,13 +132,13 @@ public class Main {
 
 
 
-        System.out.println(uiBrowseAdapter.search(""));
+
 
         // ===================== FLOW =====================
         //loanController.loanCopy(1, 1);
 
 
         loanController.returnLoan(3);
-
+        System.out.println(uiBrowseAdapter.search(""));
     }
 }
