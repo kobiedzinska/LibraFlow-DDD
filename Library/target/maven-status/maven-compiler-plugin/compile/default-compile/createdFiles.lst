@@ -1,0 +1,3 @@
+Loan\application\domain\events\CopyReturnedEvent.class
+Loan\application\domain\events\CopyOverdueEvent.class
+Loan\application\domain\events\CopyBorrowedEvent.class
