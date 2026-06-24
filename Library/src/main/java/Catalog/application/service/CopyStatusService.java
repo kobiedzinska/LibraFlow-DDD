@@ -12,11 +12,17 @@ public class CopyStatusService implements ICopyStatusEventListener {
 
 	private ICopyRepository copyRepository;
 
+
+	public CopyStatusService(ICopyRepository copyRepository) {
+		this.copyRepository = copyRepository;
+	}
+
 	/**
 	 * 
 	 * @param copyId
 	 */
 	public void handleCopyBorrowed(Integer copyId) {
+		System.out.println("Catalog/copyStatusService: handleCopyBorrowed");
 		Copy copy = copyRepository.findCopy(copyId);
 
 		if (copy == null) {

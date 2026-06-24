@@ -7,6 +7,10 @@ public class LoanEventListener {
 
 	public ICopyStatusEventListener copyStatusService;
 
+	public LoanEventListener(ICopyStatusEventListener copyStatusService) {
+		this.copyStatusService = copyStatusService;
+	}
+
 	public void handleCopyBorrowed(Integer copyId) {
 		copyStatusService.handleCopyBorrowed(copyId);
 	}
