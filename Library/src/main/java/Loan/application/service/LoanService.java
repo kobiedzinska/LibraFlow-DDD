@@ -8,13 +8,23 @@ import Loan.application.domain.service.*;
 
 import java.time.LocalDateTime;
 
-public class LoanService implements ILoanManageLoanUseCase {
+public class LoanService implements IManageLoanUseCase {
 
 	private ILoanRepository loanRepository;
 	private IDomainEventPublisher eventPublisher;
 	private LoanCopyPolicy loanPolicy;
-	private IReaderRepository readerRepository;
+	private IPaymentPort paymentPort;
+	private IReaderSnapshotAdapter readerSnapshotAdapter;
 	private ICopyStatusAdapter copyStatusAdapter;
+
+	public LoanService(ILoanRepository loanRepository, IDomainEventPublisher eventPublisher, LoanCopyPolicy loanPolicy, IPaymentPort readerRepository, IReaderSnapshotAdapter readerSnapshotAdapter, ICopyStatusAdapter copyStatusAdapter) {
+		this.loanRepository = loanRepository;
+		this.eventPublisher = eventPublisher;
+		this.loanPolicy = loanPolicy;
+		this.paymentPort = readerRepository;
+		this.readerSnapshotAdapter = readerSnapshotAdapter;
+		this.copyStatusAdapter = copyStatusAdapter;
+	}
 
 	/**
 	 * 
@@ -22,14 +32,15 @@ public class LoanService implements ILoanManageLoanUseCase {
 	 * @param readerId
 	 */
 	public void loanCopy(Integer copyId, Integer readerId) {
+		System.out.println("Service loanCopy");
 		LocalDateTime now = LocalDateTime.now();
 
 		ReaderSnapshot reader =
-				readerRepository.getReaderSnapshot(readerId);
+				readerSnapshotAdapter.getReaderSnapshot(readerId);
 
 		CopyAvailability availability =
 				copyStatusAdapter.getCopyStatus(copyId);
-
+System.out.println(loanPolicy.canBorrow(reader, availability));
 		if (!loanPolicy.canBorrow(reader, availability))return;
 
 
@@ -59,18 +70,19 @@ public class LoanService implements ILoanManageLoanUseCase {
 	public void returnLoan(Integer loanId) {
 		LocalDateTime now = LocalDateTime.now();
 		Loan loan = loanRepository.findLoan(loanId);
-		ReaderSnapshot reader = readerRepository.getReaderSnapshot(loan.getReaderId());
+
 
 		loan.returnCopy();
 
 		if(loan.getDueDate().isBefore(loan.getReturnedAt())){
-			reader.setBlocked(true);
 			eventPublisher.publish(
 					new CopyOverdue(
 							loan.getCopyId(),
+							loan.getReaderId(),
 							now
 					)
 			);
+
 		}else{
 			eventPublisher.publish(
 					new CopyReturned(

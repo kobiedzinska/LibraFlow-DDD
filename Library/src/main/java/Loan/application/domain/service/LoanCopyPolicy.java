@@ -10,6 +10,7 @@ public class LoanCopyPolicy {
 	 * @param availability
 	 */
 	public boolean canBorrow(ReaderSnapshot reader, CopyAvailability availability) {
+		System.out.println("CanBorrow: "+reader +", "+availability);
 		//throw new IllegalStateException("Reader is blocked");
 		return !reader.getBlocked() && reader.getActiveLoansCount() < 5 && availability == CopyAvailability.AVAILABLE;
 	}

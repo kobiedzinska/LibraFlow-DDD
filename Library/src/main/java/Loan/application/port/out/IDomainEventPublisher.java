@@ -6,8 +6,8 @@ public interface IDomainEventPublisher {
 
 	void publish(Object event);
 
-	void subscribe();
+	void subscribe(Object handler);
 
-	void reset();
+/*	void reset();*/
 
 }
