@@ -1,0 +1,2 @@
+1;Wiedzmin;Andrzej Sapkowski;9788375780635;SuperNowa;1990;Fantasy,Przygoda;Saga o wiedzminie
+2;Pan Tadeusz;Adam Mickiewicz;123456789;PWN;1834;Klasyka;Epopeja narodowa

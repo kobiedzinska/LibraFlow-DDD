@@ -29,14 +29,15 @@ public class ReaderFileMapper {
 
     public static Reader mapToReader(String line) {
         String[] f = line.split(SEP, -1);
-        if (f.length < 9) {
+        if (f.length < 6) {
             return null;
         }
 
         Profile profile = new Profile();
-        profile.setName(emptyToNull(f[6]));
-        profile.setSurname(emptyToNull(f[7]));
-        profile.setPESEL(emptyToNull(f[8]));
+
+        if (f.length > 6) profile.setName(emptyToNull(f[6]));
+        if (f.length > 7) profile.setSurname(emptyToNull(f[7]));
+        if (f.length > 8) profile.setPESEL(emptyToNull(f[8]));
 
         Reader r = new Reader();
         r.setReaderId(parseInt(f[0]));

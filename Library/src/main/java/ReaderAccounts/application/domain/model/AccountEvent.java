@@ -1,4 +1,6 @@
 package ReaderAccounts.application.domain.model;
 
-public abstract class AccountEvent {
+import SharedKernel.DomainEvent;
+
+public abstract class AccountEvent implements DomainEvent {
 }

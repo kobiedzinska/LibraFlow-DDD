@@ -2,23 +2,20 @@ package Payments.infrastructure.out;
 
 import Payments.application.domain.model.PaymentEvent;
 import Payments.application.ports.out.http.IDomainEventPublisher;
+import SharedKernel.DomainEvent;
+import SharedKernel.EventBus;
 
-public class DomainEventPublisher implements IDomainEventPublisher {
+public class DomainEventPublisher
+		implements IDomainEventPublisher {
 
-	public void publish(PaymentEvent event) {
-		// TODO - implement DomainEventPublisher.publish
-		throw new UnsupportedOperationException();
+	private final EventBus eventBus;
+
+	public DomainEventPublisher(EventBus eventBus) {
+		this.eventBus = eventBus;
 	}
 
-	public void subscribe(PaymentEvent event) {
-		// TODO - implement DomainEventPublisher.subscribe
-		throw new UnsupportedOperationException();
+	@Override
+	public void publish(DomainEvent event) {
+		eventBus.publish(event);
 	}
-
-	public void reset(PaymentEvent event) {
-		// TODO - implement DomainEventPublisher.reset
-		throw new UnsupportedOperationException();
-	}
-
-
 }

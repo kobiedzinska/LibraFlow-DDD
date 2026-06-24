@@ -1,4 +1,6 @@
 package Payments.application.domain.model;
 
-public class PaymentEvent {
+import SharedKernel.DomainEvent;
+
+public class PaymentEvent implements DomainEvent {
 }

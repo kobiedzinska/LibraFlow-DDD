@@ -1,3 +1,4 @@
+/*
 package Payments.infrastructure.in;
 
 import Payments.application.ports.in.ILoanOverdueEventListener;
@@ -66,4 +67,4 @@ public class LoanOverdueEventListener {
 			return json.substring(i, end);
 		}
 	}
-}
+}*/

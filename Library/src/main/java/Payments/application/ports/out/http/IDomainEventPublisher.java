@@ -1,13 +1,11 @@
 package Payments.application.ports.out.http;
 
 import Payments.application.domain.model.PaymentEvent;
+import SharedKernel.DomainEvent;
 
 public interface IDomainEventPublisher {
 
-	void publish(PaymentEvent event);
+	void publish(DomainEvent event);
 
-	void subscribe(PaymentEvent event);
-
-	void reset(PaymentEvent event);
 
 }
