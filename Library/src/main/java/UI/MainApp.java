@@ -65,7 +65,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class MainApp extends Application {
-
+//mvn javafx:run
     public static Stack<Scene> stack =new Stack<>();
     @FXML
     public TextField loanReaderId;
