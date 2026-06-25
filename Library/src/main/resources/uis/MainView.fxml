@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MainApp">
+   <children>
+      <TabPane layoutX="19.0" layoutY="14.0" prefHeight="352.0" prefWidth="563.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="PU1">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="loanReaderId" layoutX="75.0" layoutY="82.0" />
+                        <TextField fx:id="loanCopyId" layoutX="316.0" layoutY="82.0" />
+                        <Button fx:id="loanButton" layoutX="413.0" layoutY="240.0" mnemonicParsing="false" onAction="#onLoanButtonClicked" text="Loan" />
+                        <Label layoutX="316.0" layoutY="65.0" text="CopyID" />
+                        <Label layoutX="75.0" layoutY="65.0" text="ReaderId" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="PU2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="returnLoanId" layoutX="79.0" layoutY="88.0" />
+                        <TextField fx:id="returnLoanStatus" layoutX="247.0" layoutY="88.0" />
+
+
+                        <Label layoutX="248.0" layoutY="71.0" text="Status" />
+
+                        <Label layoutX="79.0" layoutY="71.0" text="LoanId" />
+                        <Button fx:id="returnLoanButton" layoutX="410.0" layoutY="88.0" mnemonicParsing="false" onAction="#onReturnedLoanClick" text="Return" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+           <Tab text="PU3">
+              <content>
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                         <TableView fx:id="booksTable" layoutY="40.0" prefHeight="283.0" prefWidth="555.0">
+                             <columns>
+                                 <TableColumn fx:id="idColumn" prefWidth="30.0" text="ID" />
+                                 <TableColumn fx:id="titleColumn" prefWidth="318.0" text="Tytuł" />
+                                 <TableColumn fx:id="authorColumn" prefWidth="141.0" text="Autor" />
+                                 <TableColumn fx:id="availableColumn" prefWidth="65.0" text="Dostępne" />
+                             </columns>
+                         </TableView>
+                        <TextField fx:id="searchTextField" layoutY="8.0" onKeyTyped="#onKeyTyped" prefHeight="25.0" prefWidth="451.0" />
+                     </children>
+                 </AnchorPane>
+              </content>
+           </Tab>
+           <Tab text="PU4">
+              <content>
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+                     <children>
+                         <Label layoutX="313.0" layoutY="132.0" text="PaymentStatus" />
+                         <Label layoutX="79.0" layoutY="132.0" text="PaymentId" />
+                         <TextField fx:id="latePaymentId" layoutX="79.0" layoutY="149.0" />
+                         <TextField fx:id="paymentStatus" layoutX="313.0" layoutY="149.0" />
+                         <Button fx:id="payLoanButton" layoutX="247.0" layoutY="149.0" mnemonicParsing="false" onAction="#onLoanPaidClick" text="Pay" />
+                     </children>
+                 </AnchorPane>
+              </content>
+           </Tab>
+           <Tab text="PU5">
+              <content>
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+                     <children></children>
+                 </AnchorPane>
+              </content>
+           </Tab>
+           <Tab text="PU6">
+              <content>
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+                     <children></children>
+                 </AnchorPane>
+              </content>
+           </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
