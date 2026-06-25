@@ -1,5 +1,8 @@
 package UI;
 
+import Catalog.application.domain.model.Book;
+import Catalog.application.domain.model.Copy;
+import Catalog.application.domain.model.CopyStatus;
 import Catalog.application.ports.in.*;
 import Catalog.application.ports.out.IBookRepository;
 import Catalog.application.ports.out.ICopyRepository;
@@ -83,6 +86,17 @@ public class MainApp extends Application {
     @FXML
     public Button payLoanButton;
     public TextField searchTextField;
+    public TextField bookTitle;
+    public TextField bookYear;
+    public TextField bookISBN;
+    public TextField bookAuthor;
+    public TextField bookPublisher;
+    public TextField bookGenre;
+    public TextField bookDescription;
+    public TextField amountOfCopies;
+    public Button bookAddButton;
+    ICatalogManagementUseCase catalogManagementUseCase;
+    IBookRepository bookRepository;
 
     @FXML
     private TableView<BookAvailabilityDto> booksTable;
@@ -98,6 +112,7 @@ public class MainApp extends Application {
 
     @FXML
     private TableColumn<BookAvailabilityDto, Long> availableColumn;
+    List<BookAvailabilityDto> books;
     LoanController loanController;
     EventBus eventBus;
     PaymentController paymentController;
@@ -105,19 +120,6 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
-
-        idColumn.setCellValueFactory(
-                new PropertyValueFactory<>("bookId"));
-
-        titleColumn.setCellValueFactory(
-                new PropertyValueFactory<>("title"));
-
-        authorColumn.setCellValueFactory(
-                new PropertyValueFactory<>("author"));
-
-        availableColumn.setCellValueFactory(
-                new PropertyValueFactory<>("availableCopies"));
 
 
 
@@ -134,7 +136,22 @@ public class MainApp extends Application {
 
     @FXML
     public void initialize(){
-         eventBus = new EventBus();
+
+        idColumn.setCellValueFactory(
+                new PropertyValueFactory<>("bookId"));
+
+        titleColumn.setCellValueFactory(
+                new PropertyValueFactory<>("title"));
+
+        authorColumn.setCellValueFactory(
+                new PropertyValueFactory<>("author"));
+
+        availableColumn.setCellValueFactory(
+                new PropertyValueFactory<>("availableCopies"));
+
+
+
+        eventBus = new EventBus();
 
         ICatalogEventPublisher catalogDomainEventPublisher = new CatalogEventPublisher();
         IReaderRepository userRepository = new ReaderRepository();
@@ -161,7 +178,7 @@ public class MainApp extends Application {
 
         IPaymentPort paymentPort = new PaymentAdapter();
 
-        IBookRepository bookRepository = new BookRepository();
+        bookRepository = new BookRepository();
         ICopyRepository copyRepository = new CopyRepository();
 
         // READER
@@ -213,7 +230,7 @@ public class MainApp extends Application {
         eventBus.register(new CopyReturnedHandler(copyStatusService));
         eventBus.register(new LoanOverdueHandler(loanOverdueEventListener));
 
-        ICatalogManagementUseCase catalogManagementUseCase =
+        catalogManagementUseCase =
                 new ManageCatalogService(bookRepository, copyRepository);
 
         // LOAN
@@ -245,6 +262,9 @@ public class MainApp extends Application {
 
         uiBrowseAdapter =
                 new UIBrowseAdapter(catalogBrowsePort);
+
+        books = uiBrowseAdapter.search("");
+        booksTable.getItems().setAll(books);
     }
 
     public static void main(String[] args) {
@@ -265,7 +285,19 @@ public class MainApp extends Application {
     }
 
     public void onKeyTyped(KeyEvent keyEvent) {
-        List<BookAvailabilityDto> books = uiBrowseAdapter.search(searchTextField.toString());
+
+        String search = searchTextField.getText();
+        books = uiBrowseAdapter.search(search);
         booksTable.getItems().setAll(books);
+    }
+
+    public void onAddBookClick(ActionEvent actionEvent) {
+        Book book = new Book(-1, bookTitle.getText(), bookAuthor.getText(), bookISBN.getText(), bookPublisher.getText(), bookYear.getText(), List.of(bookGenre.getText())    , bookDescription.getText());
+        catalogManagementUseCase.addBook(book);
+        int bookId = book.getBookId();
+        for(int i=0; i< Integer.parseInt(amountOfCopies.getText()); i++){
+            Copy c = new Copy(-1, bookId, CopyStatus.AVAILABLE);
+            catalogManagementUseCase.addCopy(c);
+        }
     }
 }
