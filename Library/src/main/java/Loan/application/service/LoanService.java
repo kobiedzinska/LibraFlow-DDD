@@ -1,14 +1,12 @@
 package Loan.application.service;
 
-import Loan.application.domain.events.CopyReturnedEvent;
-import Loan.application.domain.model.CopyAvailability;
-import Loan.application.domain.model.LoanStatus;
-import Loan.application.domain.model.ReaderSnapshot;
+
+import Loan.application.domain.model.*;
 import Loan.application.port.in.*;
 import Loan.application.port.out.*;
 import Loan.application.domain.service.*;
-import Loan.application.domain.model.Loan;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class LoanService implements IManageLoanUseCase {
@@ -16,77 +14,83 @@ public class LoanService implements IManageLoanUseCase {
 	private ILoanRepository loanRepository;
 	private IDomainEventPublisher eventPublisher;
 	private LoanCopyPolicy loanPolicy;
-	private IReaderRepository readerRepository;
-	private ICopyStatusAdapter copyStatusAdapter;
+	private IPaymentPort paymentPort;
+	private IReaderSnapshotPort readerSnapshotAdapter;
+	private ICopyStatusPort copyStatusAdapter;
+
+	public LoanService(ILoanRepository loanRepository, IDomainEventPublisher eventPublisher, LoanCopyPolicy loanPolicy, IPaymentPort readerRepository, IReaderSnapshotPort readerSnapshotAdapter, ICopyStatusPort copyStatusAdapter) {
+		this.loanRepository = loanRepository;
+		this.eventPublisher = eventPublisher;
+		this.loanPolicy = loanPolicy;
+		this.paymentPort = readerRepository;
+		this.readerSnapshotAdapter = readerSnapshotAdapter;
+		this.copyStatusAdapter = copyStatusAdapter;
+	}
 
 	/**
 	 * 
 	 * @param copyId
-	 * @param clientId
+	 * @param readerId
 	 */
-	public void loanCopy(Integer copyId, Integer clientId) {
+	public void loanCopy(int copyId, int readerId) {
+		LocalDateTime now = LocalDateTime.now();
+		CopyAvailability availability = copyStatusAdapter.getCopyStatus(copyId);
 
-		ReaderSnapshot reader =
-				readerRepository.getReaderSnapshot(clientId);
 
-		CopyAvailability availability =
-				copyStatusAdapter.getCopyStatus(copyId);
+		ReaderSnapshot reader = readerSnapshotAdapter.getReaderSnapshot(readerId);
+        int activeLoans = 0;
+        try {
+            activeLoans = loanRepository.countActiveLoansByReaderId(readerId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        reader.setActiveLoansCount(activeLoans);
 
-		loanPolicy.canBorrow(reader, availability);
+		if (!loanPolicy.canBorrow(reader, availability))return;
+
 
 		Loan loan = new Loan(
-				null,
-				clientId,
+				-1,
+				readerId,
 				copyId,
-				LocalDateTime.now().plusDays(30),
-				LocalDateTime.now(),
+				now.plusDays(30),
+				now,
 				LoanStatus.BORROWED,
 				null
 		);
 
 		loanRepository.saveLoan(loan);
-
+		System.out.println("Went");
 		eventPublisher.publish(
-				loan.borrowEvent()
+				new CopyBorrowed(copyId, readerId, now)
 		);
 	}
 
-	/*	public void loanCopy(int loanId, int clientId) {
-		ReaderSnapshot reader =
-				readerRepository.getReaderSnapshot(readerId);
-
-		CopyAvailability availability =
-				copyStatusAdapter.getCopyStatus(copyId);
-
-		loanPolicy.canBorrow(reader, availability);
-
-		Loan loan = Loan.create(readerId, copyId);
-
-		loanRepository.saveLoan(loan);
-
-		eventPublisher.publish(
-				new CopyBorrowedEvent(copyId, readerId, now)
-		);
-	}*/
 
 
 	/**
 	 * 
 	 * @param loanId
 	 */
-	public void returnCopy(Integer loanId) {
+	public void returnLoan(int loanId) {
+		LocalDateTime now = LocalDateTime.now();
 		Loan loan = loanRepository.findLoan(loanId);
 
 		loan.returnCopy();
-
 		loanRepository.saveLoan(loan);
 
 		eventPublisher.publish(
-				new CopyReturnedEvent(
-						loanId,
-						LocalDateTime.now()
+				new CopyReturned(
+						loan.getCopyId(),
+						now
 				)
 		);
+
+		if(loanPolicy.isOverdue(loan)){
+			eventPublisher.publish(
+				new LoanOverdue(loanId, loan.getReaderId(), loan.getDueDate(), loan.getReturnedAt())
+			);
+		}
 	}
 
 }

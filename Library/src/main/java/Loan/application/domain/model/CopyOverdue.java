@@ -2,38 +2,17 @@ package Loan.application.domain.model;
 
 import java.time.LocalDateTime;
 
-public class CopyOverdue {
+public class CopyOverdue extends CopyEvent {
+	private final int readerId;
 
-	private int copyId;
-	private int readerId;
-	private LocalDateTime occuredOn;
-
-	public CopyOverdue() {
-		// TODO - implement CopyOverdue.CopyOverdue
-		throw new UnsupportedOperationException();
-	}
-
-	public int getCopyId() {
-		return copyId;
-	}
-
-	public void setCopyId(int copyId) {
-		this.copyId = copyId;
+	public CopyOverdue(int copyId, int readerId, LocalDateTime occurredOn) {
+		super(copyId, occurredOn);
+		this.readerId=readerId;
 	}
 
 	public int getReaderId() {
 		return readerId;
 	}
 
-	public void setReaderId(int readerId) {
-		this.readerId = readerId;
-	}
 
-	public LocalDateTime getOccuredOn() {
-		return occuredOn;
-	}
-
-	public void setOccuredOn(LocalDateTime occuredOn) {
-		this.occuredOn = occuredOn;
-	}
 }

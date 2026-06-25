@@ -1,6 +1,9 @@
 package Loan.application.port.out;
 
 import Loan.application.domain.model.Loan;
+
+import java.io.IOException;
+
 public interface ILoanRepository {
 
 	/**
@@ -9,10 +12,12 @@ public interface ILoanRepository {
 	 */
 	void saveLoan(Loan loan);
 
+	int countActiveLoansByReaderId(int loanId) throws IOException;
+
 	/**
 	 * 
 	 * @param loanId
 	 */
-	Loan findLoan(Integer loanId);
+	Loan findLoan(int loanId);
 
 }

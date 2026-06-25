@@ -9,12 +9,23 @@ public class ManageCatalogService implements ICatalogManagementUseCase {
 	private IBookRepository bookRepository;
 	private ICopyRepository copyRepository;
 
+	public ManageCatalogService(IBookRepository bookRepository, ICopyRepository copyRepository) {
+		this.bookRepository = bookRepository;
+		this.copyRepository = copyRepository;
+	}
+
 	/**
 	 * 
 	 * @param c
 	 */
 	public void addCopy(Copy c) {
-		copyRepository.saveCopy(c);
+		Copy copy = new Copy(
+				-1,
+				c.getBookId(),
+				CopyStatus.AVAILABLE
+		);
+
+		copyRepository.saveCopy(copy);
 	}
 
 	/**
