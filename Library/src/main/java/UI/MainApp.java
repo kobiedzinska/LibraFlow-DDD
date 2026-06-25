@@ -33,6 +33,8 @@ import Payments.application.service.FinePaymentService;
 import Payments.infrastructure.in.LoanOverdueHandler;
 import Payments.infrastructure.in.PaymentController;
 import Payments.infrastructure.out.persistence.PaymentRepository;
+import ReaderAccounts.application.domain.model.Profile;
+import ReaderAccounts.application.domain.model.Reader;
 import ReaderAccounts.application.domain.service.CreateAccount;
 import ReaderAccounts.application.domain.service.DeleteAccount;
 import ReaderAccounts.application.ports.in.IAccountReaderPort;
@@ -61,6 +63,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Stack;
 
@@ -71,6 +74,13 @@ public class MainApp extends Application {
     public TextField loanReaderId;
     @FXML
     public Button loanButton;
+    public TextField readerLogin;
+    public TextField readerPassword;
+    public TextField readerEmail;
+    public TextField readerFirstName;
+    public TextField readerSurname;
+    public TextField readerPESEL;
+    ManageAccountsControler controller;
     @FXML
     public TextField loanCopyId;
     @FXML
@@ -95,6 +105,7 @@ public class MainApp extends Application {
     public TextField bookDescription;
     public TextField amountOfCopies;
     public Button bookAddButton;
+    public Button readerAddButton;
     ICatalogManagementUseCase catalogManagementUseCase;
     IBookRepository bookRepository;
 
@@ -194,7 +205,7 @@ public class MainApp extends Application {
                 paymentsPort
         );
 
-        ManageAccountsControler controller =
+        controller =
                 new ManageAccountsControler(manageAccountsService);
 
         // CATALOG
@@ -299,5 +310,10 @@ public class MainApp extends Application {
             Copy c = new Copy(-1, bookId, CopyStatus.AVAILABLE);
             catalogManagementUseCase.addCopy(c);
         }
+    }
+
+    public void onAddReaderClick(ActionEvent actionEvent) {
+        Reader reader = new Reader(readerLogin.getText(), readerEmail.getText(), readerPassword.getText(), LocalDateTime.now(), new Profile(readerFirstName.getText(), readerSurname.getText(), readerPESEL.getText()), -1, false);
+        controller.createReaderAccount(reader);
     }
 }
