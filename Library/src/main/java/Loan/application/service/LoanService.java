@@ -60,7 +60,7 @@ public class LoanService implements IManageLoanUseCase {
 		);
 
 		loanRepository.saveLoan(loan);
-		System.out.println("Went");
+		//System.out.println("Went");
 		eventPublisher.publish(
 				new CopyBorrowed(copyId, readerId, now)
 		);

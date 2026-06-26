@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MainApp">
+    <TabPane layoutX="19.0" layoutY="14.0" prefHeight="352.0" prefWidth="563.0" tabClosingPolicy="UNAVAILABLE">
+        <Tab text="PU1">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <TextField fx:id="loanReaderId" layoutX="75.0" layoutY="82.0" />
+                <TextField fx:id="loanCopyId" layoutX="316.0" layoutY="82.0" />
+                <Button fx:id="loanButton" layoutX="246.0" layoutY="82.0" mnemonicParsing="false" onAction="#onLoanButtonClicked" text="Loan" />
+                <Label layoutX="316.0" layoutY="65.0" text="CopyID" />
+                <Label layoutX="75.0" layoutY="65.0" text="ReaderId" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="PU2">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <TextField fx:id="returnLoanId" layoutX="79.0" layoutY="88.0" />
+                <TextField fx:id="returnLoanStatus" layoutX="247.0" layoutY="88.0" />
+
+
+                <Label layoutX="248.0" layoutY="71.0" text="Status" />
+
+                <Label layoutX="79.0" layoutY="71.0" text="LoanId" />
+                <Button fx:id="returnLoanButton" layoutX="410.0" layoutY="88.0" mnemonicParsing="false" onAction="#onReturnedLoanClick" text="Return" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="PU3">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <TableView fx:id="booksTable" layoutY="40.0" prefHeight="283.0" prefWidth="555.0">
+                    <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="30.0" text="ID" />
+                        <TableColumn fx:id="titleColumn" prefWidth="318.0" text="Tytuł" />
+                        <TableColumn fx:id="authorColumn" prefWidth="141.0" text="Autor" />
+                        <TableColumn fx:id="availableColumn" prefWidth="65.0" text="Dostępne" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="searchTextField" layoutY="8.0" onKeyTyped="#onKeyTyped" prefHeight="25.0" prefWidth="451.0" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="PU4">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <Label layoutX="313.0" layoutY="75.0" text="PaymentStatus" />
+                <Label layoutX="79.0" layoutY="75.0" text="PaymentId" />
+                <TextField fx:id="latePaymentId" layoutX="79.0" layoutY="92.0" />
+                <TextField fx:id="paymentStatus" layoutX="313.0" layoutY="92.0" />
+                <Button fx:id="payLoanButton" layoutX="247.0" layoutY="92.0" mnemonicParsing="false" onAction="#onLoanPaidClick" text="Pay" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="PU5">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <Button fx:id="readerAddButton" layoutX="393.0" layoutY="223.0" mnemonicParsing="false" onAction="#onAddReaderClick" text="Add" />
+            <TextField fx:id="readerLogin" layoutX="65.0" layoutY="64.0" />
+            <TextField fx:id="readerPassword" layoutX="282.0" layoutY="64.0" />
+            <TextField fx:id="readerEmail" layoutX="65.0" layoutY="113.0" />
+            <TextField fx:id="readerFirstName" layoutX="65.0" layoutY="167.0" />
+            <TextField fx:id="readerSurname" layoutX="282.0" layoutY="167.0" />
+            <TextField fx:id="readerPESEL" layoutX="65.0" layoutY="223.0" />
+            <Label layoutX="65.0" layoutY="47.0" text="Login" />
+            <Label layoutX="282.0" layoutY="47.0" text="Password" />
+            <Label layoutX="65.0" layoutY="96.0" text="Email" />
+            <Label layoutX="65.0" layoutY="153.0" text="First Name" />
+            <Label layoutX="65.0" layoutY="206.0" text="PESEL" />
+            <Label layoutX="282.0" layoutY="153.0" text="Surname" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="PU6">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <TextField fx:id="bookTitle" layoutX="99.0" layoutY="46.0" />
+               <TextField fx:id="bookYear" layoutX="99.0" layoutY="149.0" />
+               <TextField fx:id="bookISBN" layoutX="99.0" layoutY="95.0" />
+               <TextField fx:id="bookAuthor" layoutX="302.0" layoutY="46.0" />
+               <TextField fx:id="bookPublisher" layoutX="302.0" layoutY="95.0" />
+               <TextField fx:id="bookGenre" layoutX="302.0" layoutY="149.0" />
+               <TextField fx:id="bookDescription" layoutX="99.0" layoutY="204.0" />
+               <TextField fx:id="amountOfCopies" layoutX="302.0" layoutY="204.0" />
+               <Button fx:id="bookAddButton" layoutX="413.0" layoutY="256.0" mnemonicParsing="false" onAction="#onAddBookClick" text="Add" />
+               <Label layoutX="99.0" layoutY="29.0" text="Title" />
+               <Label layoutX="302.0" layoutY="29.0" text="Author" />
+               <Label layoutX="99.0" layoutY="78.0" text="ISBN" />
+               <Label layoutX="99.0" layoutY="132.0" text="YearPublished" />
+               <Label layoutX="99.0" layoutY="187.0" text="Description" />
+               <Label layoutX="302.0" layoutY="187.0" text="Amout of Copies" />
+               <Label layoutX="302.0" layoutY="78.0" text="Publisher" />
+               <Label layoutX="302.0" layoutY="132.0" text="Genre" />
+            </AnchorPane>
+        </Tab>
+    </TabPane>
+</AnchorPane>
