@@ -162,4 +162,5 @@ public class Main {
 
         System.out.println(uiBrowseAdapter.search(""));
     }
+
 }
